@@ -168,16 +168,16 @@ def obtem_resposta_IA(preco_atual):
 # Compra moeda
 def comprar_mercado(symbol, quantidade,preco_atual):
     global comprou, vendeu, qtd_ultima_vez_comprado
-    if comprou == 3 and vendeu == 0:
+    if comprou == 3:
         print('Não vai comprar')
-        return
+        return False
     try:
         compra_agora = pega_info_preco()[0]
         print(f"Comprando agora há {compra_agora}")
         if compra_agora > preco_atual:
             diferenca = float(compra_agora) - float(preco_atual)
             print(f"Valor da compra agora é maior: {compra_agora} e a diferenca é {diferenca}")
-            return
+            return False
         ordem = client.order_market_buy(
             symbol=symbol,
             quantity=quantidade
@@ -185,8 +185,8 @@ def comprar_mercado(symbol, quantidade,preco_atual):
         print(f"Ordem de compra realizada: {ordem}")
         qtd_ultima_vez_comprado = quantidade
         comprou = comprou + 1
-        if vendeu != 0:
-            vendeu = vendeu - 1
+        # if vendeu != 0:
+        #     vendeu = vendeu - 1
         print(f' Na compra o comprou é: {comprou} e vendeu é: {vendeu}')
     except Exception as e:
         print(f"Erro ao realizar a ordem de compra: {e}")
@@ -194,9 +194,9 @@ def comprar_mercado(symbol, quantidade,preco_atual):
 # Função para realizar uma ordem de venda de mercado (Market Sell)
 def vender_mercado(symbol, quantidade, preco_atual):
     global comprou, vendeu, qtd_ultima_vez_vendido
-    if comprou == 0 and vendeu == 3:
-        print('Não vai vender')
-        return
+    # if comprou == 0 and vendeu == 3:
+    #     print('Não vai vender')
+    #     return
     try:
         vendendo_agora = pega_info_preco()[0]
         print(f"Vendendo agora há {vendendo_agora}")
@@ -244,11 +244,14 @@ def main_bot():
         quantidade_compra = float(valor_investido) / float(preco_atual)
         quantidade_compra = ajustar_quantidade(quantidade_compra, step_size_symbol)
         print(f"Comprando {quantidade_compra} {crypt}")
-        comprar_mercado(crypt,quantidade_compra,preco_atual)
-        
-        # Armazenar o preço de compra e a quantidade comprada
-        preco_compra = preco_atual
-        quantidade_comprada = quantidade_compra
+        comprar_final = comprar_mercado(crypt,quantidade_compra,preco_atual)
+        if comprar_final == False:
+            print('Nao comprou nadaaa')
+        else:
+            # Armazenar o preço de compra e a quantidade comprada
+            preco_compra = preco_atual
+            quantidade_comprada = quantidade_compra
+            
     else:
         saldo_sei = obter_saldo_crypt('SEI')
         
@@ -257,7 +260,7 @@ def main_bot():
         valor_venda =  ajustar_quantidade(valor_venda, step_size_symbol)
         
         print (f"Vendendo {valor_venda} {crypt}")
-        if float(qtd_ultima_vez_comprado) < float(valor_venda) and qtd_ultima_vez_comprado != 0:
+        if float(qtd_ultima_vez_comprado) < float(preco_atual):
             vender_mercado(crypt,valor_venda, preco_atual)
             preco_venda = preco_atual
             if preco_compra is not None and quantidade_comprada is not None:
