@@ -1,0 +1,469 @@
+Relatório diário
+Data: 2024-09-18
+18:51:44 - Preço Atual: 331498.00000000
+18:51:46 - Valor de BRL inicial: 11327.06164800
+18:51:47 - Valor de BTC inicial: 1.00000000
+18:52:48 - Preço Atual: 331207.00000000
+18:52:50 - RSI 55.45036321254328, ultimo_valor é: 331498.00000000 e valor_agora é: 331207.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:52:50 - Bollinger de compra: False; Bollinger de venda: False
+18:52:50 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+18:53:51 - Preço Atual: 331280.00000000
+18:53:53 - RSI 56.1779970029215, ultimo_valor é: 331207.00000000 e valor_agora é: 331280.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:53:53 - Bollinger de compra: False; Bollinger de venda: False
+18:53:53 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+18:54:54 - Preço Atual: 331280.00000000
+18:54:56 - RSI 56.1779970029215, ultimo_valor é: 331280.00000000 e valor_agora é: 331280.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:54:56 - Bollinger de compra: False; Bollinger de venda: False
+18:54:56 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+18:55:58 - Preço Atual: 331078.00000000
+18:56:00 - RSI 54.02600241052442, ultimo_valor é: 331280.00000000 e valor_agora é: 331078.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:56:00 - Bollinger de compra: False; Bollinger de venda: False
+18:56:00 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+18:57:02 - Preço Atual: 331199.00000000
+18:57:03 - RSI 55.273005909625326, ultimo_valor é: 331078.00000000 e valor_agora é: 331199.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:57:03 - Bollinger de compra: False; Bollinger de venda: False
+18:57:03 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+18:58:04 - Preço Atual: 331416.00000000
+18:58:06 - RSI 57.26647746864775, ultimo_valor é: 331199.00000000 e valor_agora é: 331416.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:58:06 - Bollinger de compra: False; Bollinger de venda: False
+18:58:06 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+18:59:07 - Preço Atual: 331378.00000000
+18:59:08 - RSI 56.95771416443848, ultimo_valor é: 331416.00000000 e valor_agora é: 331378.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+18:59:08 - Bollinger de compra: False; Bollinger de venda: False
+18:59:08 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:00:10 - Preço Atual: 331099.00000000
+19:00:12 - RSI 54.126213310342834, ultimo_valor é: 331378.00000000 e valor_agora é: 331099.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:00:12 - Bollinger de compra: False; Bollinger de venda: False
+19:00:12 - RSI caiu em 2.831500854095644. Considerar compra.
+19:00:16 - Ordem de compra nao realizada pois é zero: 0.00000000
+19:01:17 - Preço Atual: 331182.00000000
+19:01:19 - RSI 54.909825582324, ultimo_valor é: 331099.00000000 e valor_agora é: 331182.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:01:19 - Bollinger de compra: False; Bollinger de venda: False
+19:01:19 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:02:21 - Preço Atual: 331175.00000000
+19:02:22 - RSI 54.8200860946688, ultimo_valor é: 331182.00000000 e valor_agora é: 331175.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:02:22 - Bollinger de compra: False; Bollinger de venda: False
+19:02:22 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:03:24 - Preço Atual: 331084.00000000
+19:03:26 - RSI 53.96264267849938, ultimo_valor é: 331175.00000000 e valor_agora é: 331084.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:03:26 - Bollinger de compra: False; Bollinger de venda: False
+19:03:26 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:04:27 - Preço Atual: 331084.00000000
+19:04:29 - RSI 53.96264267849938, ultimo_valor é: 331084.00000000 e valor_agora é: 331084.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:04:29 - Bollinger de compra: False; Bollinger de venda: False
+19:04:29 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:05:31 - Preço Atual: 331030.00000000
+19:05:32 - RSI 53.043550467606934, ultimo_valor é: 331084.00000000 e valor_agora é: 331030.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:05:32 - Bollinger de compra: False; Bollinger de venda: False
+19:05:32 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:06:34 - Preço Atual: 331011.00000000
+19:06:36 - RSI 52.86376933418752, ultimo_valor é: 331030.00000000 e valor_agora é: 331011.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:06:36 - Bollinger de compra: False; Bollinger de venda: False
+19:06:36 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:07:38 - Preço Atual: 331116.00000000
+19:07:39 - RSI 53.840435765123864, ultimo_valor é: 331011.00000000 e valor_agora é: 331116.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:07:39 - Bollinger de compra: False; Bollinger de venda: False
+19:07:39 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:08:41 - Preço Atual: 331054.00000000
+19:08:43 - RSI 54.49593943013002, ultimo_valor é: 331116.00000000 e valor_agora é: 331054.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:08:43 - Bollinger de compra: False; Bollinger de venda: False
+19:08:43 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:09:44 - Preço Atual: 331100.00000000
+19:09:46 - RSI 53.69423246315655, ultimo_valor é: 331054.00000000 e valor_agora é: 331100.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:09:46 - Bollinger de compra: False; Bollinger de venda: False
+19:09:46 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:10:48 - Preço Atual: 331435.00000000
+19:10:50 - RSI 57.068398464914296, ultimo_valor é: 331100.00000000 e valor_agora é: 331435.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:10:50 - Bollinger de compra: False; Bollinger de venda: False
+19:10:50 - RSI subiu em 3.374166001757743. Considerar venda.
+19:10:53 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2436538, 'orderListId': -1, 'clientOrderId': '6cvjnwGap2EnWei7No3D39', 'transactTime': 1726697456648, 'price': '331435.00000000', 'origQty': '0.29999000', 'executedQty': '0.24382000', 'cummulativeQuoteQty': '80817.23062000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726697456648, 'fills': [{'price': '331472.00000000', 'qty': '0.00188000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296163}, {'price': '331465.00000000', 'qty': '0.00182000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296164}, {'price': '331463.00000000', 'qty': '0.23338000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296165}, {'price': '331455.00000000', 'qty': '0.00197000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296166}, {'price': '331446.00000000', 'qty': '0.00302000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296167}, {'price': '331445.00000000', 'qty': '0.00175000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296168}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 80817.23062 e quantidade vendida 0.24382
+19:10:55 - Saldo inicial: 1.00000000 BTC
+19:10:55 - Saldo final: 0.75618000 BTC
+19:10:55 - Valores/Quantidade: $Vendi 0.24382 
+
+19:10:55 - Saldo inicial: 12045.53858200 BRL
+19:10:55 - Saldo final: 92862.76920200 BRL
+19:10:55 - Valores/Quantidade: $Para receber 80817.23062 
+
+19:11:58 - Preço Atual: 331557.00000000
+19:11:59 - RSI 58.09584454643614, ultimo_valor é: 331435.00000000 e valor_agora é: 331557.00000000 e preco_compra é: 0.0 e preco venda é 331435.00000000
+19:11:59 - Bollinger de compra: False; Bollinger de venda: False
+19:12:03 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2436661, 'orderListId': -1, 'clientOrderId': 'mWiyUd5jvUBtz2M1enQzwS', 'transactTime': 1726697526166, 'price': '331557.00000000', 'origQty': '0.22685000', 'executedQty': '0.00633000', 'cummulativeQuoteQty': '2098.85554000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726697526166, 'fills': [{'price': '331575.00000000', 'qty': '0.00209000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296173}, {'price': '331573.00000000', 'qty': '0.00233000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296174}, {'price': '331570.00000000', 'qty': '0.00191000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296175}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 2098.85554 e quantidade vendida 0.0063300000000000006
+19:12:04 - Saldo inicial: 0.75618000 BTC
+19:12:04 - Saldo final: 0.74985000 BTC
+19:12:04 - Valores/Quantidade: $Vendi 0.0063300000000000006 
+
+19:12:04 - Saldo inicial: 92862.76920200 BRL
+19:12:04 - Saldo final: 94961.62474200 BRL
+19:12:04 - Valores/Quantidade: $Para receber 2098.85554 
+
+19:13:06 - Preço Atual: 331526.00000000
+19:13:08 - RSI 57.839461108513284, ultimo_valor é: 331557.00000000 e valor_agora é: 331526.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:13:08 - Bollinger de compra: False; Bollinger de venda: False
+19:13:08 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:14:11 - Preço Atual: 331494.00000000
+19:14:12 - RSI 57.78113328217989, ultimo_valor é: 331526.00000000 e valor_agora é: 331494.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:14:12 - Bollinger de compra: False; Bollinger de venda: False
+19:14:12 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:15:14 - Preço Atual: 331451.00000000
+19:15:16 - RSI 57.06397576147821, ultimo_valor é: 331494.00000000 e valor_agora é: 331451.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:15:16 - Bollinger de compra: False; Bollinger de venda: False
+19:15:16 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:16:18 - Preço Atual: 331320.00000000
+19:16:19 - RSI 55.49049501560853, ultimo_valor é: 331451.00000000 e valor_agora é: 331320.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:16:19 - Bollinger de compra: False; Bollinger de venda: False
+19:16:19 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:17:20 - Preço Atual: 331302.00000000
+19:17:22 - RSI 55.281046699411675, ultimo_valor é: 331320.00000000 e valor_agora é: 331302.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:17:22 - Bollinger de compra: False; Bollinger de venda: False
+19:17:22 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:18:24 - Preço Atual: 331300.00000000
+19:18:25 - RSI 55.25787222343347, ultimo_valor é: 331302.00000000 e valor_agora é: 331300.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:18:25 - Bollinger de compra: False; Bollinger de venda: False
+19:18:25 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:19:27 - Preço Atual: 331422.00000000
+19:19:28 - RSI 56.70800534411479, ultimo_valor é: 331300.00000000 e valor_agora é: 331422.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:19:28 - Bollinger de compra: False; Bollinger de venda: False
+19:19:28 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:20:30 - Preço Atual: 331317.00000000
+19:20:32 - RSI 55.10687503132956, ultimo_valor é: 331422.00000000 e valor_agora é: 331317.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:20:32 - Bollinger de compra: False; Bollinger de venda: False
+19:20:32 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior False e maior que preco compra True
+19:21:34 - Preço Atual: 331441.00000000
+19:21:35 - RSI 56.424454264549986, ultimo_valor é: 331317.00000000 e valor_agora é: 331441.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:21:35 - Bollinger de compra: False; Bollinger de venda: False
+19:21:35 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:22:36 - Preço Atual: 331470.00000000
+19:22:38 - RSI 56.701540977718075, ultimo_valor é: 331441.00000000 e valor_agora é: 331470.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:22:38 - Bollinger de compra: False; Bollinger de venda: False
+19:22:38 - Fiz nada venda ou compra (venda = false; compra = true): None valor agora é maior True e maior que preco compra True
+19:23:39 - Preço Atual: 331779.00000000
+19:23:40 - RSI 59.449021877308645, ultimo_valor é: 331470.00000000 e valor_agora é: 331779.00000000 e preco_compra é: 0.0 e preco venda é 331557.00000000
+19:23:40 - Bollinger de compra: False; Bollinger de venda: False
+19:23:44 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2438188, 'orderListId': -1, 'clientOrderId': 'nVsAdfHSzdRai64lYyWFni', 'transactTime': 1726698227373, 'price': '331779.00000000', 'origQty': '0.22495000', 'executedQty': '0.00496000', 'cummulativeQuoteQty': '1645.71248000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698227373, 'fills': [{'price': '331804.00000000', 'qty': '0.00275000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296304}, {'price': '331788.00000000', 'qty': '0.00221000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296305}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 1645.71248 e quantidade vendida 0.00496
+19:23:45 - Saldo inicial: 0.74985000 BTC
+19:23:45 - Saldo final: 0.74489000 BTC
+19:23:45 - Valores/Quantidade: $Vendi 0.00496 
+
+19:23:45 - Saldo inicial: 95486.85956400 BRL
+19:23:45 - Saldo final: 97132.57204400 BRL
+19:23:45 - Valores/Quantidade: $Para receber 1645.71248 
+
+19:24:47 - Preço Atual: 331880.00000000
+19:24:48 - RSI 60.272991125430416, ultimo_valor é: 331779.00000000 e valor_agora é: 331880.00000000 e preco_compra é: 0.0 e preco venda é 331779.00000000
+19:24:48 - Bollinger de compra: False; Bollinger de venda: False
+19:24:52 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2438371, 'orderListId': -1, 'clientOrderId': 'qZDtsUx6JtP4eu2AaZJCFV', 'transactTime': 1726698295281, 'price': '331880.00000000', 'origQty': '0.22346000', 'executedQty': '0.22346000', 'cummulativeQuoteQty': '74181.34582000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698295281, 'fills': [{'price': '331967.00000000', 'qty': '0.00293000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296327}, {'price': '331967.00000000', 'qty': '0.22053000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296328}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 74181.34582 e quantidade vendida 0.22346
+19:24:53 - Saldo inicial: 0.74489000 BTC
+19:24:53 - Saldo final: 0.52143000 BTC
+19:24:53 - Valores/Quantidade: $Vendi 0.22346 
+
+19:24:53 - Saldo inicial: 97132.57204400 BRL
+19:24:53 - Saldo final: 171313.91786400 BRL
+19:24:53 - Valores/Quantidade: $Para receber 74181.34582 
+
+19:25:54 - Preço Atual: 332052.00000000
+19:25:56 - RSI 61.82200046813631, ultimo_valor é: 331880.00000000 e valor_agora é: 332052.00000000 e preco_compra é: 0.0 e preco venda é 331880.00000000
+19:25:56 - Bollinger de compra: False; Bollinger de venda: False
+19:26:00 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:27:01 - Preço Atual: 332067.00000000
+19:27:03 - RSI 61.94172810588234, ultimo_valor é: 332052.00000000 e valor_agora é: 332067.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:27:03 - Bollinger de compra: False; Bollinger de venda: False
+19:27:06 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2438690, 'orderListId': -1, 'clientOrderId': 'N1isi5OBrnoyWpp4qRWBTM', 'transactTime': 1726698429831, 'price': '332067.00000000', 'origQty': '0.15642000', 'executedQty': '0.15642000', 'cummulativeQuoteQty': '51961.86203000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698429831, 'fills': [{'price': '332256.00000000', 'qty': '0.00205000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296354}, {'price': '332255.00000000', 'qty': '0.00268000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296355}, {'price': '332244.00000000', 'qty': '0.00208000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296356}, {'price': '332219.00000000', 'qty': '0.00196000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296357}, {'price': '332217.00000000', 'qty': '0.00292000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296358}, {'price': '332191.00000000', 'qty': '0.00172000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296359}, {'price': '332191.00000000', 'qty': '0.14301000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296360}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 51961.862030000004 e quantidade vendida 0.15642
+19:27:08 - Saldo inicial: 0.52143000 BTC
+19:27:08 - Saldo final: 0.36501000 BTC
+19:27:08 - Valores/Quantidade: $Vendi 0.15642 
+
+19:27:08 - Saldo inicial: 171364.04195100 BRL
+19:27:08 - Saldo final: 223325.90398100 BRL
+19:27:08 - Valores/Quantidade: $Para receber 51961.862030000004 
+
+19:28:09 - Preço Atual: 332319.00000000
+19:28:10 - RSI 63.99665101428726, ultimo_valor é: 332067.00000000 e valor_agora é: 332319.00000000 e preco_compra é: 0.0 e preco venda é 332067.00000000
+19:28:10 - Bollinger de compra: False; Bollinger de venda: False
+19:28:14 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:29:16 - Preço Atual: 332461.00000000
+19:29:17 - RSI 64.83812599150637, ultimo_valor é: 332319.00000000 e valor_agora é: 332461.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:29:17 - Bollinger de compra: False; Bollinger de venda: True
+19:29:17 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:29:20 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:30:22 - Preço Atual: 332435.00000000
+19:30:23 - RSI 64.68888640898345, ultimo_valor é: 332461.00000000 e valor_agora é: 332435.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:30:23 - Bollinger de compra: False; Bollinger de venda: False
+19:30:25 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:31:27 - Preço Atual: 332410.00000000
+19:31:29 - RSI 64.35498439553082, ultimo_valor é: 332435.00000000 e valor_agora é: 332410.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:31:29 - Bollinger de compra: False; Bollinger de venda: False
+19:31:32 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2439455, 'orderListId': -1, 'clientOrderId': 'XWoEnFYJYr7ICNO07Ji9AH', 'transactTime': 1726698694994, 'price': '332410.00000000', 'origQty': '0.10950000', 'executedQty': '0.00253000', 'cummulativeQuoteQty': '841.01103000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698694994, 'fills': [{'price': '332428.00000000', 'qty': '0.00006000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296410}, {'price': '332416.00000000', 'qty': '0.00030000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296411}, {'price': '332415.00000000', 'qty': '0.00217000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296412}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 841.01103 e quantidade vendida 0.00253
+19:31:33 - Saldo inicial: 0.36501000 BTC
+19:31:33 - Saldo final: 0.36248000 BTC
+19:31:33 - Valores/Quantidade: $Vendi 0.00253 
+
+19:31:33 - Saldo inicial: 223325.90398100 BRL
+19:31:33 - Saldo final: 224166.91501100 BRL
+19:31:33 - Valores/Quantidade: $Para receber 841.01103 
+
+19:32:34 - Preço Atual: 332668.00000000
+19:32:36 - RSI 66.02525158725103, ultimo_valor é: 332410.00000000 e valor_agora é: 332668.00000000 e preco_compra é: 0.0 e preco venda é 332410.00000000
+19:32:36 - Bollinger de compra: False; Bollinger de venda: True
+19:32:36 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:32:39 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2439622, 'orderListId': -1, 'clientOrderId': 'AqGYb8r8QKl8nG4655YIwz', 'transactTime': 1726698762349, 'price': '332668.00000000', 'origQty': '0.10874000', 'executedQty': '0.00518000', 'cummulativeQuoteQty': '1723.36215000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698762349, 'fills': [{'price': '332711.00000000', 'qty': '0.00123000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296436}, {'price': '332709.00000000', 'qty': '0.00208000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296437}, {'price': '332670.00000000', 'qty': '0.00187000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296438}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 1723.36215 e quantidade vendida 0.00518
+19:32:41 - Saldo inicial: 0.36248000 BTC
+19:32:41 - Saldo final: 0.35730000 BTC
+19:32:41 - Valores/Quantidade: $Vendi 0.00518 
+
+19:32:41 - Saldo inicial: 224201.66312000 BRL
+19:32:41 - Saldo final: 225925.02527000 BRL
+19:32:41 - Valores/Quantidade: $Para receber 1723.36215 
+
+19:33:42 - Preço Atual: 332737.00000000
+19:33:43 - RSI 66.94359610907594, ultimo_valor é: 332668.00000000 e valor_agora é: 332737.00000000 e preco_compra é: 0.0 e preco venda é 332668.00000000
+19:33:43 - Bollinger de compra: False; Bollinger de venda: True
+19:33:43 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:33:46 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2439827, 'orderListId': -1, 'clientOrderId': 'eYGatCUJpvP80pC6M2rhAk', 'transactTime': 1726698829228, 'price': '332737.00000000', 'origQty': '0.10718000', 'executedQty': '0.10718000', 'cummulativeQuoteQty': '35666.08099000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698829228, 'fills': [{'price': '332770.00000000', 'qty': '0.00220000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296479}, {'price': '332769.00000000', 'qty': '0.00235000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296480}, {'price': '332768.00000000', 'qty': '0.10263000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296481}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 35666.08099 e quantidade vendida 0.10718
+19:33:47 - Saldo inicial: 0.35730000 BTC
+19:33:47 - Saldo final: 0.25012000 BTC
+19:33:47 - Valores/Quantidade: $Vendi 0.10718 
+
+19:33:47 - Saldo inicial: 225925.02527000 BRL
+19:33:47 - Saldo final: 261591.10626000 BRL
+19:33:47 - Valores/Quantidade: $Para receber 35666.08099 
+
+19:34:49 - Preço Atual: 332877.00000000
+19:34:50 - RSI 67.48251701458062, ultimo_valor é: 332737.00000000 e valor_agora é: 332877.00000000 e preco_compra é: 0.0 e preco venda é 332737.00000000
+19:34:50 - Bollinger de compra: False; Bollinger de venda: True
+19:34:50 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:34:53 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2439974, 'orderListId': -1, 'clientOrderId': 'KTdUKFpJdtmIp59ZEp2FGT', 'transactTime': 1726698895981, 'price': '332877.00000000', 'origQty': '0.07503000', 'executedQty': '0.07503000', 'cummulativeQuoteQty': '24976.81173000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698895981, 'fills': [{'price': '332891.00000000', 'qty': '0.07503000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296494}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 24976.81173 e quantidade vendida 0.07503
+19:34:54 - Saldo inicial: 0.25012000 BTC
+19:34:54 - Saldo final: 0.17509000 BTC
+19:34:54 - Valores/Quantidade: $Vendi 0.07503 
+
+19:34:54 - Saldo inicial: 261591.10626000 BRL
+19:34:54 - Saldo final: 286567.91799000 BRL
+19:34:54 - Valores/Quantidade: $Para receber 24976.81173 
+
+19:35:56 - Preço Atual: 332933.00000000
+19:35:58 - RSI 68.16621997756502, ultimo_valor é: 332877.00000000 e valor_agora é: 332933.00000000 e preco_compra é: 0.0 e preco venda é 332877.00000000
+19:35:58 - Bollinger de compra: False; Bollinger de venda: True
+19:35:58 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:36:01 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2440121, 'orderListId': -1, 'clientOrderId': 'sC9fmH4su7FfqC0lb9BzIk', 'transactTime': 1726698964706, 'price': '332933.00000000', 'origQty': '0.05252000', 'executedQty': '0.05252000', 'cummulativeQuoteQty': '17486.79660000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726698964706, 'fills': [{'price': '332955.00000000', 'qty': '0.05252000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296497}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 17486.796599999998 e quantidade vendida 0.05252
+19:36:03 - Saldo inicial: 0.17509000 BTC
+19:36:03 - Saldo final: 0.12257000 BTC
+19:36:03 - Valores/Quantidade: $Vendi 0.05252 
+
+19:36:03 - Saldo inicial: 286567.91799000 BRL
+19:36:03 - Saldo final: 304054.71459000 BRL
+19:36:03 - Valores/Quantidade: $Para receber 17486.796599999998 
+
+19:37:05 - Preço Atual: 333280.00000000
+19:37:06 - RSI 70.27666082140748, ultimo_valor é: 332933.00000000 e valor_agora é: 333280.00000000 e preco_compra é: 0.0 e preco venda é 332933.00000000
+19:37:06 - Bollinger de compra: False; Bollinger de venda: True
+19:37:06 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:37:09 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2440297, 'orderListId': -1, 'clientOrderId': 'nSRdKvvybyph4OiRmS3jU0', 'transactTime': 1726699032882, 'price': '333280.00000000', 'origQty': '0.03677000', 'executedQty': '0.03677000', 'cummulativeQuoteQty': '12254.70560000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726699032882, 'fills': [{'price': '333280.00000000', 'qty': '0.03677000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296527}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 12254.7056 e quantidade vendida 0.03677
+19:37:12 - Saldo inicial: 0.12257000 BTC
+19:37:12 - Saldo final: 0.08580000 BTC
+19:37:12 - Valores/Quantidade: $Vendi 0.03677 
+
+19:37:12 - Saldo inicial: 304054.71459000 BRL
+19:37:12 - Saldo final: 316309.42019000 BRL
+19:37:12 - Valores/Quantidade: $Para receber 12254.7056 
+
+19:38:14 - Preço Atual: 333414.00000000
+19:38:15 - RSI 71.01861890983001, ultimo_valor é: 333280.00000000 e valor_agora é: 333414.00000000 e preco_compra é: 0.0 e preco venda é 333280.00000000
+19:38:15 - Bollinger de compra: False; Bollinger de venda: True
+19:38:15 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:38:19 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2440466, 'orderListId': -1, 'clientOrderId': 'SXibkbfoyH20BAZm8YQOyk', 'transactTime': 1726699101950, 'price': '333414.00000000', 'origQty': '0.02573000', 'executedQty': '0.02573000', 'cummulativeQuoteQty': '8579.77142000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726699101950, 'fills': [{'price': '333454.00000000', 'qty': '0.00225000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296546}, {'price': '333454.00000000', 'qty': '0.02348000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296547}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 8579.771420000001 e quantidade vendida 0.02573
+19:38:19 - Saldo inicial: 0.08580000 BTC
+19:38:19 - Saldo final: 0.06007000 BTC
+19:38:19 - Valores/Quantidade: $Vendi 0.02573 
+
+19:38:19 - Saldo inicial: 316333.90834000 BRL
+19:38:19 - Saldo final: 324913.67976000 BRL
+19:38:19 - Valores/Quantidade: $Para receber 8579.771420000001 
+
+19:39:21 - Preço Atual: 333585.00000000
+19:39:22 - RSI 71.91331107168251, ultimo_valor é: 333414.00000000 e valor_agora é: 333585.00000000 e preco_compra é: 0.0 e preco venda é 333414.00000000
+19:39:22 - Bollinger de compra: False; Bollinger de venda: True
+19:39:22 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:39:25 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:40:27 - Preço Atual: 333668.00000000
+19:40:28 - RSI 72.11396963393386, ultimo_valor é: 333585.00000000 e valor_agora é: 333668.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:40:28 - Bollinger de compra: False; Bollinger de venda: True
+19:40:28 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:40:31 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2440842, 'orderListId': -1, 'clientOrderId': 'kBmYIgJovL9V5hDnT93cLu', 'transactTime': 1726699234714, 'price': '333668.00000000', 'origQty': '0.01802000', 'executedQty': '0.00390000', 'cummulativeQuoteQty': '1301.37285000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726699234714, 'fills': [{'price': '333688.00000000', 'qty': '0.00183000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296579}, {'price': '333683.00000000', 'qty': '0.00207000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296580}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 1301.37285 e quantidade vendida 0.0039
+19:40:32 - Saldo inicial: 0.06007000 BTC
+19:40:32 - Saldo final: 0.05617000 BTC
+19:40:32 - Valores/Quantidade: $Vendi 0.0039 
+
+19:40:32 - Saldo inicial: 324913.67976000 BRL
+19:40:32 - Saldo final: 326215.05261000 BRL
+19:40:32 - Valores/Quantidade: $Para receber 1301.37285 
+
+19:41:34 - Preço Atual: 333673.00000000
+19:41:35 - RSI 72.14085816136264, ultimo_valor é: 333668.00000000 e valor_agora é: 333673.00000000 e preco_compra é: 0.0 e preco venda é 333668.00000000
+19:41:35 - Bollinger de compra: False; Bollinger de venda: True
+19:41:35 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:41:38 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:42:39 - Preço Atual: 333500.00000000
+19:42:41 - RSI 69.99084745991159, ultimo_valor é: 333673.00000000 e valor_agora é: 333500.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:42:41 - Bollinger de compra: False; Bollinger de venda: True
+19:42:41 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:42:43 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:43:45 - Preço Atual: 333494.00000000
+19:43:46 - RSI 69.91185827773076, ultimo_valor é: 333500.00000000 e valor_agora é: 333494.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:43:46 - Bollinger de compra: False; Bollinger de venda: True
+19:43:46 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:43:50 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:44:51 - Preço Atual: 333469.00000000
+19:44:52 - RSI 69.58464678381934, ultimo_valor é: 333494.00000000 e valor_agora é: 333469.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:44:52 - Bollinger de compra: False; Bollinger de venda: True
+19:44:52 - Preço acima da banda superior de Bollinger e RSI > 59. Considerar venda.
+19:44:57 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:45:59 - Preço Atual: 333153.00000000
+19:46:00 - RSI 66.02370629097813, ultimo_valor é: 333469.00000000 e valor_agora é: 333153.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:46:00 - Bollinger de compra: False; Bollinger de venda: False
+19:46:00 - RSI caiu em 3.560940492841212. Considerar compra.
+19:46:03 - Ordem de compra nao realizada pois é zero: 0.00000000
+19:47:04 - Preço Atual: 333231.00000000
+19:47:06 - RSI 67.02378084715632, ultimo_valor é: 333153.00000000 e valor_agora é: 333231.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:47:06 - Bollinger de compra: False; Bollinger de venda: False
+19:47:09 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2441725, 'orderListId': -1, 'clientOrderId': '25ixvtmKWMQ4ZUeUwgtF8J', 'transactTime': 1726699632547, 'price': '333231.00000000', 'origQty': '0.01685000', 'executedQty': '0.00289000', 'cummulativeQuoteQty': '963.11944000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726699632547, 'fills': [{'price': '333260.00000000', 'qty': '0.00093000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296621}, {'price': '333259.00000000', 'qty': '0.00196000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296622}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 963.1194399999999 e quantidade vendida 0.00289
+19:47:11 - Saldo inicial: 0.05617000 BTC
+19:47:11 - Saldo final: 0.05328000 BTC
+19:47:11 - Valores/Quantidade: $Vendi 0.00289 
+
+19:47:11 - Saldo inicial: 322883.35478700 BRL
+19:47:11 - Saldo final: 323846.47422700 BRL
+19:47:11 - Valores/Quantidade: $Para receber 963.1194399999999 
+
+19:48:13 - Preço Atual: 333326.00000000
+19:48:14 - RSI 68.60928629391232, ultimo_valor é: 333231.00000000 e valor_agora é: 333326.00000000 e preco_compra é: 0.0 e preco venda é 333231.00000000
+19:48:14 - Bollinger de compra: False; Bollinger de venda: False
+19:48:17 - Ordem de venda nao realizada pois é zero: 0.00000000
+19:49:19 - Preço Atual: 333283.00000000
+19:49:19 - RSI 67.70750039998919, ultimo_valor é: 333326.00000000 e valor_agora é: 333283.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+19:49:19 - Bollinger de compra: False; Bollinger de venda: False
+19:49:22 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2441982, 'orderListId': -1, 'clientOrderId': 'OoLwKuD6vNWLZj5QBhY5Kl', 'transactTime': 1726699765886, 'price': '333283.00000000', 'origQty': '0.01598000', 'executedQty': '0.01598000', 'cummulativeQuoteQty': '5326.45037000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726699765886, 'fills': [{'price': '333332.00000000', 'qty': '0.00157000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296645}, {'price': '333328.00000000', 'qty': '0.00232000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296646}, {'price': '333321.00000000', 'qty': '0.00172000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296647}, {'price': '333320.00000000', 'qty': '0.00190000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296648}, {'price': '333315.00000000', 'qty': '0.00163000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296649}, {'price': '333315.00000000', 'qty': '0.00684000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 296650}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 5326.4503700000005 e quantidade vendida 0.01598
+19:49:24 - Saldo inicial: 0.05328000 BTC
+19:49:24 - Saldo final: 0.03730000 BTC
+19:49:24 - Valores/Quantidade: $Vendi 0.01598 
+
+19:49:24 - Saldo inicial: 325573.45296500 BRL
+19:49:24 - Saldo final: 330899.90333500 BRL
+19:49:24 - Valores/Quantidade: $Para receber 5326.4503700000005 
+
+19:50:25 - Preço Atual: 333397.00000000
+19:50:26 - RSI 68.98264197549886, ultimo_valor é: 333283.00000000 e valor_agora é: 333397.00000000 e preco_compra é: 0.0 e preco venda é 333283.00000000
+19:50:26 - Bollinger de compra: False; Bollinger de venda: False
+21:16:34 - Preço Atual: 338882.00000000
+21:16:36 - Valor de BRL inicial: 332143.39575400
+21:16:36 - Valor de BTC inicial: 0.03730000
+21:17:38 - Preço Atual: 339056.00000000
+21:17:39 - RSI 84.7522065471719, ultimo_valor é: 338882.00000000 e valor_agora é: 339056.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:17:39 - Bollinger de compra: False; Bollinger de venda: False
+21:17:41 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2452642, 'orderListId': -1, 'clientOrderId': 'A4KrhRyL8LhhuPIxQB53ds', 'transactTime': 1726705064649, 'price': '339056.00000000', 'origQty': '0.01118000', 'executedQty': '0.01118000', 'cummulativeQuoteQty': '3791.29591000', 'status': 'FILLED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726705064649, 'fills': [{'price': '339125.00000000', 'qty': '0.00233000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297780}, {'price': '339116.00000000', 'qty': '0.00254000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297781}, {'price': '339112.00000000', 'qty': '0.00272000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297782}, {'price': '339108.00000000', 'qty': '0.00281000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297783}, {'price': '339105.00000000', 'qty': '0.00078000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297784}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 3791.2959100000007 e quantidade vendida 0.011179999999999999
+21:17:43 - Saldo inicial: 0.03730000 BTC
+21:17:43 - Saldo final: 0.02612000 BTC
+21:17:43 - Valores/Quantidade: $Vendi 0.011179999999999999 
+
+21:17:43 - Saldo inicial: 332143.39575400 BRL
+21:17:43 - Saldo final: 335934.69166400 BRL
+21:17:43 - Valores/Quantidade: $Para receber 3791.2959100000007 
+
+21:18:44 - Preço Atual: 338771.00000000
+21:18:45 - RSI 80.91721886841465, ultimo_valor é: 339056.00000000 e valor_agora é: 338771.00000000 e preco_compra é: 0.0 e preco venda é 339056.00000000
+21:18:46 - Bollinger de compra: False; Bollinger de venda: False
+21:18:46 - RSI caiu em 3.834987678757244. Considerar compra.
+21:18:49 - Ordem de compra realizada: {'symbol': 'BTCBRL', 'orderId': 2452730, 'orderListId': -1, 'clientOrderId': 'huYC3zr7vKYmrjjM2lsdNz', 'transactTime': 1726705132374, 'price': '338771.00000000', 'origQty': '0.29761000', 'executedQty': '0.03124000', 'cummulativeQuoteQty': '10580.91643000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'BUY', 'workingTime': 1726705132374, 'fills': [{'price': '338629.00000000', 'qty': '0.00287000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297800}, {'price': '338630.00000000', 'qty': '0.00157000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297801}, {'price': '338685.00000000', 'qty': '0.00284000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297802}, {'price': '338688.00000000', 'qty': '0.00249000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297803}, {'price': '338689.00000000', 'qty': '0.00281000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297804}, {'price': '338697.00000000', 'qty': '0.00163000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297805}, {'price': '338699.00000000', 'qty': '0.00151000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297806}, {'price': '338703.00000000', 'qty': '0.00281000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297807}, {'price': '338710.00000000', 'qty': '0.00257000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297808}, {'price': '338711.00000000', 'qty': '0.00278000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297809}, {'price': '338722.00000000', 'qty': '0.00210000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297810}, {'price': '338728.00000000', 'qty': '0.00198000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297811}, {'price': '338753.00000000', 'qty': '0.00133000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297812}, {'price': '338759.00000000', 'qty': '0.00195000', 'commission': '0.00000000', 'commissionAsset': 'BTC', 'tradeId': 297813}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 10580.91643 e quantidade 0.031240000000000004
+21:18:50 - Saldo inicial: 336074.22201700 BRL
+21:18:50 - Saldo final: 325493.30558700 BRL
+21:18:50 - Valores/Quantidade: $Gastei 10580.91643 
+
+21:18:50 - Saldo inicial: 0.02612000 BTC
+21:18:50 - Saldo final: 0.05736000 BTC
+21:18:50 - Valores/Quantidade: $Para Comprar 0.031240000000000004 
+
+21:19:51 - Preço Atual: 339036.00000000
+21:19:52 - RSI 84.25030383229192, ultimo_valor é: 338771.00000000 e valor_agora é: 339036.00000000 e preco_compra é: 338771.00000000 e preco venda é 339056.00000000
+21:19:52 - Bollinger de compra: False; Bollinger de venda: False
+21:19:54 - Preço de venda (339036.00000000) ainda não atingiu a margem mínima de lucro (339279.15650000004), Não vendeu
+21:20:55 - Preço Atual: 339725.00000000
+21:20:57 - RSI 85.99339440965021, ultimo_valor é: 339036.00000000 e valor_agora é: 339725.00000000 e preco_compra é: 338771.00000000 e preco venda é 339056.00000000
+21:20:57 - Bollinger de compra: False; Bollinger de venda: False
+21:21:00 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:22:01 - Preço Atual: 339850.00000000
+21:22:02 - RSI 86.57676028856002, ultimo_valor é: 339725.00000000 e valor_agora é: 339850.00000000 e preco_compra é: 338771.00000000 e preco venda é 0.0
+21:22:02 - Bollinger de compra: False; Bollinger de venda: False
+21:22:05 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:23:06 - Preço Atual: 339950.00000000
+21:23:07 - RSI 86.85576881798285, ultimo_valor é: 339850.00000000 e valor_agora é: 339950.00000000 e preco_compra é: 338771.00000000 e preco venda é 0.0
+21:23:07 - Bollinger de compra: False; Bollinger de venda: False
+21:23:10 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2453133, 'orderListId': -1, 'clientOrderId': 'x5BcxejeE76zZ64mR7nteQ', 'transactTime': 1726705393420, 'price': '339950.00000000', 'origQty': '0.01720000', 'executedQty': '0.00404000', 'cummulativeQuoteQty': '1373.42964000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726705393420, 'fills': [{'price': '339959.00000000', 'qty': '0.00168000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297870}, {'price': '339957.00000000', 'qty': '0.00236000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297871}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 1373.42964 e quantidade vendida 0.00404
+21:23:11 - Saldo inicial: 0.05736000 BTC
+21:23:11 - Saldo final: 0.05332000 BTC
+21:23:11 - Valores/Quantidade: $Vendi 0.00404 
+
+21:23:11 - Saldo inicial: 325493.30558700 BRL
+21:23:11 - Saldo final: 326866.73522700 BRL
+21:23:11 - Valores/Quantidade: $Para receber 1373.42964 
+
+21:23:11 - Isso foi o lucro R$5.09089553137026
+21:24:13 - Preço Atual: 339957.00000000
+21:24:14 - RSI 86.87024123239546, ultimo_valor é: 339950.00000000 e valor_agora é: 339957.00000000 e preco_compra é: 338771.00000000 e preco venda é 339950.00000000
+21:24:14 - Bollinger de compra: False; Bollinger de venda: False
+21:24:17 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2453206, 'orderListId': -1, 'clientOrderId': 'CJzVreJt5XtOTER9xxCrg4', 'transactTime': 1726705460644, 'price': '339957.00000000', 'origQty': '0.01599000', 'executedQty': '0.01385000', 'cummulativeQuoteQty': '4708.56395000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726705460644, 'fills': [{'price': '339988.00000000', 'qty': '0.00253000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297872}, {'price': '339979.00000000', 'qty': '0.00206000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297873}, {'price': '339963.00000000', 'qty': '0.00195000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297874}, {'price': '339962.00000000', 'qty': '0.00218000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297875}, {'price': '339960.00000000', 'qty': '0.00289000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297876}, {'price': '339959.00000000', 'qty': '0.00224000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297877}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 4708.563950000001 e quantidade vendida 0.013850000000000001
+21:24:18 - Saldo inicial: 0.05332000 BTC
+21:24:18 - Saldo final: 0.03947000 BTC
+21:24:18 - Valores/Quantidade: $Vendi 0.013850000000000001 
+
+21:24:18 - Saldo inicial: 326873.26995200 BRL
+21:24:18 - Saldo final: 331581.83390200 BRL
+21:24:18 - Valores/Quantidade: $Para receber 4708.563950000001 
+
+21:24:18 - Isso foi o lucro R$17.600679977593966
+21:25:20 - Preço Atual: 339796.00000000
+21:25:21 - RSI 85.57739052690698, ultimo_valor é: 339957.00000000 e valor_agora é: 339796.00000000 e preco_compra é: 338771.00000000 e preco venda é 339957.00000000
+21:25:21 - Bollinger de compra: False; Bollinger de venda: False
+21:25:24 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:26:26 - Preço Atual: 338701.00000000
+21:26:27 - RSI 72.14949992385401, ultimo_valor é: 339796.00000000 e valor_agora é: 338701.00000000 e preco_compra é: 338771.00000000 e preco venda é 0.0
+21:26:27 - Bollinger de compra: False; Bollinger de venda: False
+21:26:27 - RSI caiu em 13.427890603052973. Considerar compra.
+21:26:29 - Primeira condição é True:False a segunda é False False limite:0.1 x -0.32225217483431234
+21:26:29 - Terceira condição é False:False a segunda é -0.30165157918280383
+21:27:30 - Preço Atual: 338542.00000000
+21:27:31 - RSI 70.56486117622403, ultimo_valor é: 338701.00000000 e valor_agora é: 338542.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:27:31 - Bollinger de compra: False; Bollinger de venda: False
+21:27:34 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:28:35 - Preço Atual: 338337.00000000
+21:28:37 - RSI 68.5976085663231, ultimo_valor é: 338542.00000000 e valor_agora é: 338337.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:28:37 - Bollinger de compra: False; Bollinger de venda: False
+21:28:39 - Ordem de venda realizada: {'symbol': 'BTCBRL', 'orderId': 2453623, 'orderListId': -1, 'clientOrderId': 'dtEl1Cw4m0AEAC4q4r8rpv', 'transactTime': 1726705721966, 'price': '338337.00000000', 'origQty': '0.01184000', 'executedQty': '0.00693000', 'cummulativeQuoteQty': '2344.81341000', 'status': 'EXPIRED', 'timeInForce': 'IOC', 'type': 'LIMIT', 'side': 'SELL', 'workingTime': 1726705721966, 'fills': [{'price': '338363.00000000', 'qty': '0.00281000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297948}, {'price': '338354.00000000', 'qty': '0.00157000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297949}, {'price': '338352.00000000', 'qty': '0.00255000', 'commission': '0.00000000', 'commissionAsset': 'BRL', 'tradeId': 297950}], 'selfTradePreventionMode': 'EXPIRE_MAKER'} no valor 2344.8134099999997 e quantidade vendida 0.00693
+21:28:41 - Saldo inicial: 0.03947000 BTC
+21:28:41 - Saldo final: 0.03254000 BTC
+21:28:41 - Valores/Quantidade: $Vendi 0.00693 
+
+21:28:41 - Saldo inicial: 331677.12218900 BRL
+21:28:41 - Saldo final: 334021.93559900 BRL
+21:28:41 - Valores/Quantidade: $Para receber 2344.8134099999997 
+
+21:28:41 - Isso foi o lucro R$-2.3617135563378078
+21:29:42 - Preço Atual: 338587.00000000
+21:29:43 - RSI 70.80257672989188, ultimo_valor é: 338337.00000000 e valor_agora é: 338587.00000000 e preco_compra é: 0.0 e preco venda é 338337.00000000
+21:29:43 - Bollinger de compra: False; Bollinger de venda: False
+21:29:44 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:30:45 - Preço Atual: 338700.00000000
+21:30:46 - RSI 71.73371080449772, ultimo_valor é: 338587.00000000 e valor_agora é: 338700.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:30:46 - Bollinger de compra: False; Bollinger de venda: False
+21:30:49 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:31:50 - Preço Atual: 338998.00000000
+21:31:51 - RSI 72.76489615841328, ultimo_valor é: 338700.00000000 e valor_agora é: 338998.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:31:51 - Bollinger de compra: False; Bollinger de venda: False
+21:31:54 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:32:55 - Preço Atual: 338666.00000000
+21:32:57 - RSI 71.40119176117678, ultimo_valor é: 338998.00000000 e valor_agora é: 338666.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:32:57 - Bollinger de compra: False; Bollinger de venda: False
+21:33:01 - Ordem de venda nao realizada pois é zero: 0.00000000
+21:34:03 - Preço Atual: 339922.00000000
+21:34:04 - RSI 75.95581821157536, ultimo_valor é: 338666.00000000 e valor_agora é: 339922.00000000 e preco_compra é: 0.0 e preco venda é 0.0
+21:34:04 - Bollinger de compra: False; Bollinger de venda: False
+21:34:07 - Ordem de venda nao realizada pois é zero: 0.00000000
