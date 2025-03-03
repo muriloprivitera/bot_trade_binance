@@ -20694,3 +20694,79 @@ Name: 499, dtype: object
 2025-03-03 14:25:00,738 - INFO - Risk Action HOLD
 2025-03-03 14:25:00,739 - INFO - Estrategia SELL
 2025-03-03 14:25:00,739 - INFO - Ciclo completo executado com sucesso
+2025-03-03 14:39:02,781 - INFO - {'initial_brl': 175.07391627, 'initial_sol': 0.000888, 'current_brl': 175.07391627, 'current_sol': 0.000888}
+2025-03-03 14:39:03,159 - INFO - Indicadores: 
+timestamp           1741023000000
+open                        935.7
+high                        939.7
+low                         935.5
+close                       937.7
+volume                     72.253
+close_time          1741023899999
+quote_volume       67635.19250000
+trades                         75
+taker_buy_base        21.31800000
+taker_quote_vol    19973.86770000
+ignore                          0
+RSI_14                  43.579059
+EMA_9                  938.127119
+EMA_21                  945.53475
+EMA_50                 957.369824
+BBL_20_2.0             910.150013
+BBM_20_2.0                950.845
+BBU_20_2.0             991.539987
+BBB_20_2.0               8.559752
+MACD_12_26_9             -7.89765
+MACDh_12_26_9           -0.815286
+MACDs_12_26_9           -7.082364
+ATRr_14                 12.317149
+K_14_3                  31.759229
+D_14_3                  31.741139
+J_14_3                  31.795409
+candle_color                green
+ADX                     36.580056
+PSAR                   950.370203
+Name: 499, dtype: object
+2025-03-03 14:39:03,160 - INFO - >>>>>>> Compra [np.True_, np.True_, np.False_, np.False_, np.True_, np.True_, np.True_, np.False_, np.False_, np.True_, np.True_, np.True_] com candle: ['No pattern']
+2025-03-03 14:39:03,161 - INFO - >>>>>>> Venda [np.False_, np.True_, False, np.False_, np.True_] com candle: ['No pattern']
+2025-03-03 14:39:03,161 - INFO - Risk Action HOLD
+2025-03-03 14:39:03,162 - INFO - Estrategia SELL
+2025-03-03 14:39:03,162 - INFO - Ciclo completo executado com sucesso
+2025-03-03 14:53:04,913 - INFO - {'initial_brl': 175.07391627, 'initial_sol': 0.000888, 'current_brl': 175.07391627, 'current_sol': 0.000888}
+2025-03-03 14:53:05,301 - INFO - Indicadores: 
+timestamp            1741023900000
+open                         945.3
+high                         945.3
+low                          921.8
+close                        928.4
+volume                     126.359
+close_time           1741024799999
+quote_volume       118058.41770000
+trades                         144
+taker_buy_base         30.39700000
+taker_quote_vol     28368.43050000
+ignore                           0
+RSI_14                   40.284884
+EMA_9                   937.189695
+EMA_21                  944.497707
+EMA_50                  956.471123
+BBL_20_2.0              908.579583
+BBM_20_2.0                  949.03
+BBU_20_2.0              989.480417
+BBB_20_2.0                8.524581
+MACD_12_26_9              -7.86519
+MACDh_12_26_9            -0.706671
+MACDs_12_26_9            -7.158519
+ATRr_14                  13.460822
+K_14_3                   30.554057
+D_14_3                   32.044047
+J_14_3                   27.574075
+candle_color                   red
+ADX                      36.314856
+PSAR                    948.175991
+Name: 499, dtype: object
+2025-03-03 14:53:05,302 - INFO - >>>>>>> Compra [np.True_, np.False_, np.False_, np.False_, np.True_, np.True_, np.False_, np.False_, np.False_, np.False_, np.False_, np.False_] com candle: ['No pattern']
+2025-03-03 14:53:05,303 - INFO - >>>>>>> Venda [np.False_, np.True_, False, np.True_, np.True_] com candle: ['No pattern']
+2025-03-03 14:53:05,303 - INFO - Risk Action HOLD
+2025-03-03 14:53:05,303 - INFO - Estrategia SELL
+2025-03-03 14:53:05,304 - INFO - Ciclo completo executado com sucesso
