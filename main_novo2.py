@@ -1,12 +1,13 @@
 from binance.client import Client
 import pandas as pd
-import numpy as np
 import pandas_ta as ta
 import time
+import numpy as np
 import schedule
-# import logging
+import logging
+from datetime import datetime
 import os
-import requests
+import json
 from dotenv import load_dotenv
 import math  # Importado para cálculo correto de múltiplos
 
@@ -14,56 +15,44 @@ import math  # Importado para cálculo correto de múltiplos
 load_dotenv()
 
 # Configuração de logs
-# logging.basicConfig(
-#     level=logging.INFO,
-#     format='%(asctime)s - %(levelname)s - %(message)s',
-#     handlers=[
-#         logging.FileHandler('logs/trading.log'),
-#         logging.StreamHandler()
-#     ]
-# )
-# Configuração do Telegram
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-BINANCE_API_KEY = os.getenv('BINANCE_API_KEY')
-BINANCE_API_SECRET = os.getenv('BINANCE_API_SECRET')
-BINANCE_API_KEY_TEST = os.getenv('BINANCE_API_KEY_TEST')
-BINANCE_API_SECRET_TEST = os.getenv('BINANCE_API_SECRET_TEST')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/trading_novo.log'),
+        logging.StreamHandler()
+    ]
+)
+
 # Parâmetros do robô
-SYMBOL = 'ETHBRL'
+SYMBOL = 'SOLBRL'
 INTERVAL = '15m'  # Intervalo otimizado para reduzir ruído
-STOP_LOSS = 0.03  # 1.3%
-TAKE_PROFIT = 0.005  # 0,5%
+STOP_LOSS = 0.05  # 1.3%
+TAKE_PROFIT = 0.005  # 0,8%
 MAX_POSITION = 0.3  # 30% do saldo por operação
 MAX_POSITION_SELL = 1  # 30% do saldo por operação
 FEE = 0.001  # Taxa da Binance
 
 # Inicialização da API
-# client = Client('', '',testnet=True)
-client = Client(BINANCE_API_KEY, BINANCE_API_SECRET)
+# client = Client('2XN9JbgwjLaSx5uwGh9h8v4cWTWqf08ODFxB9YaoscFdDYLBiQeOvKstplHsdhpb', 'llXDrLerEsTtSRWkCXZCkZl2Xioam34txrmAZdICaaoIsjmV4PEWZKAWjonHo0yO',testnet=True)
+client = Client('opzvJnFYWTHK95nzpImF8d0oMVfEyQ42eDpvY2iCpLwjYIEo87oodgk364Qwczi9', 'lanA8kOOcXN6ijBsrGlTpm3vOb8jJTwgABvAR89372xrhOHGUpiogQT8FdZ0vf1X')
 
 class TradingBot:
     def __init__(self):
-        self.position = None
+        self.position = None ###atençãoo
         self.entry_price = 0.0
         self.entry_qty = 0.0
         self.balance_log = {
             'initial_brl': 0.0,
-            'initial_eth': 0.0,
+            'initial_sol': 0.0,
             'current_brl': 0.0,
-            'current_eth': 0.0
+            'current_sol': 0.0
         }
         
         # Criar pastas necessárias
         os.makedirs('logs', exist_ok=True)
         os.makedirs('registros_saldo', exist_ok=True)
 
-    def send_telegram_message(self,message):
-        """Envia uma mensagem para o Telegram."""
-        url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-        data = {"chat_id": TELEGRAM_CHAT_ID, "text": message}
-        response = requests.post(url, data=data)
-        
     def get_historical_data(self, interval=INTERVAL, limit=500):
         """Obtém dados históricos formatados"""
         klines = client.get_klines(
@@ -88,7 +77,6 @@ class TradingBot:
         df.ta.ema(length=9, append=True)
         df.ta.ema(length=21, append=True)
         df.ta.ema(length=50, append=True)
-       
         
         # Bollinger Bands
         df.ta.bbands(length=20, std=2, append=True)
@@ -106,6 +94,7 @@ class TradingBot:
             axis=1
         )
         df['ADX'] = ta.adx(df['high'], df['low'], df['close'])['ADX_14']
+        
          # Calcular Parabolic SAR
         psar = ta.psar(high=df['high'], low=df['low'], close=df['close'], af0=0.02, af=0.02, max_af=0.2)
         if psar is not None and not psar.empty:
@@ -114,23 +103,28 @@ class TradingBot:
 
             # Remover linhas com NaN para evitar erros
             df.dropna(subset=['PSAR'], inplace=True)
+        
         return df.dropna()
 
     def get_balance(self, asset):
         """Obtém saldo formatado"""
-        valor = float(client.get_asset_balance(asset,recvWindow=60000)['free'])
-        return f"{valor:.10f}"
+        return float(client.get_asset_balance(asset,recvWindow=60000)['free'])
 
-    # def log_transaction(self, side, detalhes):
-    #     """
-    #     Implementa o log da transação.
-    #     Você pode modificar para salvar em banco de dados, enviar para um arquivo log, etc.
-    #     """
-    #     logging.info(f"Transação {side}: {detalhes}")
+    def log_transaction(self, action, details):
+        """Registro detalhado de operações"""
+        log_entry = {
+            'action': action,
+            'symbol': SYMBOL,
+            'price': details.get('price', 0),
+            'quantity': details.get('quantity', 0),
+            'reason': details.get('reason', ''),
+            'balances': self.balance_log.copy()
+        }
+        logging.info(json.dumps(log_entry, indent=2))
 
     def execute_order(self, side, quantity, price, order_type="LIMIT"):
         try:
-            attempt = 15  # Número máximo de tentativas
+            attempt = 10  # Número máximo de tentativas
             current_attempt = 0  # Contador de tentativas
 
             # Obter informações do par
@@ -154,21 +148,19 @@ class TradingBot:
             # **1️⃣ Ajustar quantidade mínima para compra (BUY)**
             if side == "BUY":
                 available_balance = balances.get("BRL", 0)  # Saldo disponível em BRL
-                max_qty = available_balance / price  # Quantidade máxima de ETH que pode ser comprada
+                max_qty = available_balance / price  # Quantidade máxima de SOL que pode ser comprada
                 adjusted_qty = min(adjusted_qty, max_qty)  # Garante que a quantidade não ultrapasse o saldo
                 total_cost = adjusted_qty * price  # Custo total da compra
                 if total_cost > available_balance:
-                    self.send_telegram_message(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponível apenas {available_balance:.2f} BRL")
-                    # logging.error(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponível apenas {available_balance:.2f} BRL")
+                    logging.error(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponível apenas {available_balance:.2f} BRL")
                     return None  # Cancela a ordem
 
             # **2️⃣ Ajustar quantidade mínima para venda (SELL)**
             elif side == "SELL":
-                available_balance = balances.get("ETH", 0)  # Saldo disponível em ETH
+                available_balance = balances.get("SOL", 0)  # Saldo disponível em SOL
                 adjusted_qty = min(adjusted_qty, available_balance)  # Garante que a quantidade não ultrapasse o saldo
                 if adjusted_qty > available_balance:
-                    self.send_telegram_message(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} ETH, mas disponível apenas {available_balance:.6f} ETH")
-                    # logging.error(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} ETH, mas disponível apenas {available_balance:.6f} ETH")
+                    logging.error(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} SOL, mas disponível apenas {available_balance:.6f} SOL")
                     return None  # Cancela a ordem
 
             # **3️⃣ Se o valor total da ordem for menor que minNotional, ajustar a quantidade corretamente**
@@ -177,19 +169,16 @@ class TradingBot:
                 min_qty_required = min_notional / price
                 # Arredondar para o próximo múltiplo válido de step_size
                 adjusted_qty = math.ceil(min_qty_required / step_size) * step_size
-                # logging.warning(f"Ajustando quantidade para atender minNotional {min_notional} BRL: {adjusted_qty} ETH")
-                self.send_telegram_message(f"Ajustando quantidade para atender minNotional {min_notional} BRL: {adjusted_qty} ETH")
+                logging.warning(f"Ajustando quantidade para atender minNotional {min_notional} BRL: {adjusted_qty} SOL")
 
             # Garantir que a quantidade seja maior que minQty
             if adjusted_qty < min_qty:
                 adjusted_qty = min_qty
-                # logging.warning(f"Ajustando quantidade para o mínimo permitido {min_qty} ETH")
-                self.send_telegram_message(f"Ajustando quantidade para o mínimo permitido {min_qty} ETH")
+                logging.warning(f"Ajustando quantidade para o mínimo permitido {min_qty} SOL")
 
             # Verificação final: garantir que o valor total da ordem atenda `minNotional`
             if adjusted_qty * price < min_notional:
-                # logging.error(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda está abaixo de {min_notional} BRL")
-                self.send_telegram_message(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda está abaixo de {min_notional} BRL")
+                logging.error(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda está abaixo de {min_notional} BRL")
                 return None
 
             while current_attempt < attempt:
@@ -211,36 +200,31 @@ class TradingBot:
                         price=round(price, 2),recvWindow=60000
                     )
 
-                # logging.info(f"Ordem enviada (tentativa {current_attempt + 1}/{attempt}): {order}")
+                logging.info(f"Ordem enviada (tentativa {current_attempt + 1}/{attempt}): {order}")
 
-                time.sleep(4)  # Espera 4 segundos para ver se a ordem executa
+                time.sleep(4)  # Espera 10 segundos para ver se a ordem executa
 
                 # Verificar status da ordem
                 order_status = client.get_order(symbol=SYMBOL, orderId=order['orderId'],recvWindow=60000)
                 executed_qty = float(order_status.get('executedQty', 0))
 
                 if executed_qty > 0:
-                    # logging.info(f"Ordem {side} executada com sucesso: {executed_qty} {SYMBOL}")
-                    self.send_telegram_message(f"Ordem {side} executada com sucesso: {executed_qty} {SYMBOL}")
+                    logging.info(f"Ordem {side} executada com sucesso: {executed_qty} {SYMBOL}")
                     return order
                 else:
-                    # logging.warning(f"Ordem {side} não executada, tentando novamente...")
-                    # self.send_telegram_message(f"Ordem {side} não executada, tentando novamente...")
+                    logging.warning(f"Ordem {side} não executada, tentando novamente...")
 
                     # Se a ordem não foi executada, cancelar antes de tentar de novo
-                    # logging.info(f"Cancelando ordem não executada: {order['orderId']}")
-                    self.send_telegram_message(f"Cancelando ordem não executada: {order['orderId']}")
+                    logging.info(f"Cancelando ordem não executada: {order['orderId']}")
                     client.cancel_order(symbol=SYMBOL, orderId=order['orderId'],recvWindow=60000)
 
                     current_attempt += 1
             # client.cancel_order(symbol=SYMBOL, orderId=order['orderId'],recvWindow=60000)
-            # logging.error(f"Ordem {side} falhou após {attempt} tentativas")
-            self.send_telegram_message(f"Ordem {side} falhou após {attempt} tentativas")
+            logging.error(f"Ordem {side} falhou após {attempt} tentativas")
             return None
 
         except Exception as e:
-            # logging.error(f"Erro na ordem {side}: {str(e)}")
-            self.send_telegram_message(f"Erro na ordem {side}: {str(e)}")
+            logging.error(f"Erro na ordem {side}: {str(e)}")
             return None
 
     def identify_candle_pattern(self,candle):
@@ -310,19 +294,18 @@ class TradingBot:
 
         return patterns
 
+
     def check_risk_management(self, current_price):
         """Verifica stop loss e take profit"""
         if self.position == 'LONG':
             pl_percent = (current_price - self.entry_price) / self.entry_price
             
             if pl_percent <= -STOP_LOSS:
-                # logging.warning(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
+                logging.warning(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
                 return 'SELL'
                 
             if pl_percent >= TAKE_PROFIT:
-                # logging.info(f"Take profit alcançado! Ganho: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Take profit alcançado! 🎯 Ganho: {pl_percent*100:.2f}%")
+                logging.info(f"Take profit alcançado! Ganho: {pl_percent*100:.2f}%")
                 return 'SELL'
         
         return 'HOLD'
@@ -330,9 +313,8 @@ class TradingBot:
     def trading_strategy(self, df):
         """Implementa a lógica de decisão"""
         last = df.iloc[-1]
-        # logging.info(f"Indicadores: \n{last}" )
-        # return
         previous = df.iloc[-2]
+        logging.info(f"Indicadores: \n{last}" )
         candle_patterns = self.identify_candle_pattern(last)
 
         # Para compra, você pode querer padrões bullish como Hammer ou Bullish Marubozu:
@@ -344,21 +326,20 @@ class TradingBot:
         buy_conditions = [
             last['close'] < last['BBU_20_2.0'], # Não comprar no topo
             # (last['BBU_20_2.0'] - last['close']) / last['BBU_20_2.0'] > 0.003,
-            last['close'] * 1.009 > last['EMA_9'], # Próximo das EMAs de suporte
-            last['close'] * 1.009 > last['EMA_21'],
-            last['MACDh_12_26_9'] > 0.6, # Confirmação do momentum positivo
+            last['close'] * 1.003 > last['EMA_9'], # Próximo das EMAs de suporte
+            last['MACD_12_26_9'] > last['MACDs_12_26_9'], # Reversão altista
+            last['MACDh_12_26_9'] > 0.2,
+            last['MACDh_12_26_9'] < 2.7, # Confirmação do momentum positivo
             last['ADX'] > 19, # Tendência forte
             last['K_14_3'] > last['D_14_3'],
             last['K_14_3'] - last['D_14_3'] >= 4,
-            last['J_14_3'] < 100,
-            # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendência de alta
             last['PSAR'] < last['close'],  # PSAR está abaixo do preço
             # Novas Condições Baseadas no Dado Anterior
             last['close'] > previous['close'],  # Preço atual maior que o anterior
             last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD está subindo
             # last['ADX'] > previous['ADX'],  # ADX aumentando (tendência ganhando força)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
-            
+            # (buy_candle_condition or last['ADX'] > 19) # Se o candle pattern é bullish ou, alternativamente, o ADX estiver acima de 27
         ]
         
         sell_conditions = [
@@ -368,99 +349,29 @@ class TradingBot:
             last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
             (last['ADX'] > 27 and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'])
         ]
-        # logging.info(f">>>>>>> Compra {buy_conditions} com candle: {candle_patterns}" )
-        # logging.info(f">>>>>>> Venda {sell_conditions} com candle: {candle_patterns}")
+        logging.info(f">>>>>>> Compra {buy_conditions} com candle: {candle_patterns}" )
+        logging.info(f">>>>>>> Venda {sell_conditions} com candle: {candle_patterns}")
         if all(buy_conditions):
-            self.send_telegram_message(f"Indicadores na compra \n{last}")
             return 'BUY'
         elif any(sell_conditions) and last['close'] >= self.entry_price :
-            self.send_telegram_message(f"Indicadores na venda \n{last}")
             return 'SELL'
-        self.send_telegram_message(f"TESTE")
         return 'HOLD'
 
     def ajustar_quantidade(self,quantity, step_size):
         precision = len(str(step_size).split('.')[1])
         return round(float(quantity) // float(step_size) * float(step_size), precision)
     
-    def processar_detalhes_ordem(self,order):
-        """
-        Processa os detalhes dos fills de uma ordem.
-        Retorna:
-        - preco_medio: média ponderada dos preços de execução
-        - quantidade_total: soma das quantidades executadas
-        - comissoes: dicionário com a soma das comissões por ativo
-        """
-        fills = order.get('fills', [])
-        if not fills:
-            print("Sem fills na ordem!")
-            return None, None, None
-
-        quantidade_total = 0.0
-        soma_ponderada = 0.0
-        comissoes = {}
-
-        for fill in fills:
-            try:
-                qty = float(fill.get('qty', 0))
-                preco = float(fill.get('price', 0))
-                comissao = float(fill.get('commission', 0))
-                ativo_comissao = fill.get('commissionAsset', '')
-            except Exception as e:
-                print(f"Erro ao converter valores do fill: {e}")
-                continue
-
-            # Acumula quantidade e soma ponderada do preço
-            quantidade_total += qty
-            soma_ponderada += preco * qty
-
-            # Agrupa comissões por ativo
-            if ativo_comissao in comissoes:
-                comissoes[ativo_comissao] += comissao
-            else:
-                comissoes[ativo_comissao] = comissao
-
-        preco_medio = soma_ponderada / quantidade_total if quantidade_total != 0 else 0
-        return preco_medio, quantidade_total, comissoes
-    
-    def converter_comissao_para_brl(self,comissoes, taxa_conversao):
-        """
-        Converte as comissões para BRL utilizando um dicionário com as taxas de conversão.
-
-        text
-        Parâmetros:
-        comissoes: dicionário no formato {'BNB': valor, ...}
-        taxa_conversao: dicionário com taxa de conversão, ex: {'BNB': 150.0}
-
-        Retorna:
-        comissoes_brl: dicionário com as comissões convertidas para BRL.
-        """
-        comissoes_brl = {}
-        for ativo, valor in comissoes.items():
-            if ativo in taxa_conversao:
-                comissoes_brl[ativo] = valor * taxa_conversao[ativo]
-            else:
-                # Se não houver taxa definida, você pode optar por manter o valor original ou definir como None
-                comissoes_brl[ativo] = valor  
-        return comissoes_brl
-    
-    def obter_taxa_brl_para(self,ativo):
-        """
-        Função fictícia para obter a taxa de conversão do ativo para BRL.
-        Substitua essa função pela implementação que recupere a taxa real.
-
-        text
-        Exemplo: 1 BNB = 150 BRL.
-        """
-        data = client.get_symbol_ticker(symbol=ativo)
-        price = float(data["price"])
-        taxas = {'BNB': price}
-        return taxas.get(ativo, 1)
-    
     def run(self):
         """Executa o ciclo completo de trading"""
         try:
-            
+            # Atualizar saldos
+            self.balance_log = {
+                'initial_brl': self.get_balance('BRL'),
+                'initial_sol': self.get_balance('SOL'),
+                'current_brl': self.get_balance('BRL'),
+                'current_sol': self.get_balance('SOL')
+            }
+            logging.info(self.balance_log)
             # Obter e processar dados
             df = self.get_historical_data()
             df = self.calculate_indicators(df)
@@ -471,54 +382,28 @@ class TradingBot:
             
             # Tomar decisão estratégica
             strategy_action = self.trading_strategy(df)
-            # logging.info("Risk Action "+ risk_action)
-            # logging.info("Estrategia "+ strategy_action)
+            logging.info("Risk Action "+ risk_action)
+            logging.info("Estrategia "+ strategy_action)
             
             if  (self.position == 'LONG' or self.position == 'LONG2') and (risk_action == 'SELL' or strategy_action == 'SELL'):
-                eth_balance = self.balance_log['current_eth']
-                if eth_balance > 0.0001:  # Apenas vende se houver saldo suficiente
-                    qty = eth_balance * MAX_POSITION_SELL  # Vende apenas uma parte do saldo
-                    self.balance_log = {
-                        'initial_brl': self.get_balance('BRL'),
-                        'initial_eth': self.get_balance('ETH'),
-                    }
-                    self.send_telegram_message(f"Valores Iniciais {self.balance_log}")
+                sol_balance = self.balance_log['current_sol']
+                if sol_balance > 0.0001:  # Apenas vende se houver saldo suficiente
+                    qty = sol_balance * MAX_POSITION_SELL  # Vende apenas uma parte do saldo
+                    brl_received = qty * current_price
+                   
+                    logging.info(f"Quantidade de venda ajustada: {qty:.6f} SOL")
+
                     order = self.execute_order('SELL', qty, current_price)
-                    # logging.info(f"Ordem {order}")
-                    self.send_telegram_message(f" Ordem : {order}")
+                    logging.info(f"Ordem {order}")
 
                     if order:
-                        # Processa os detalhes dos fills da ordem
-                        preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
-                        # Obtem taxa de conversão para cada ativo nas comissões,
-                        # por enquanto, usando apenas BNB como exemplo.
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
-                        comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
-                        # Log da transação com os dados processados
-                        # self.log_transaction('SELL', {
-                        #     'price': preco_medio,          # Preço médio de execução
-                        #     'quantity': qtd_exec,          # Quantidade total executada
-                        #     'commission': comissoes,       # Comissões por ativo
-                        #     'commission_brl': comissoes_brl, # Comissões convertidas para BRL
-                        #     'sell_price' : preco_medio * qtd_exec
-                        #     'reason': 'Risk/Strategy Sell Signal'
-                        # })
-                        infos = {
-                            'price': preco_medio,          # Preço médio de execução
-                            'quantity': qtd_exec,          # Quantidade total executada
-                            'commission': comissoes,       # Comissões por ativo
-                            'commission_brl': comissoes_brl, # Comissões convertidas para BRL
-                            'sell_price' : preco_medio * qtd_exec,
+                        self.log_transaction('SELL', {
+                            'price': current_price,
+                            'quantity': qty,
                             'reason': 'Risk/Strategy Sell Signal'
-                        }
-                        self.send_telegram_message(f"📉 Venda : {infos}")
-                        # logging.info(f"Valor estimado em BRL da venda: {brl_received:.2f} BRL")
+                        })
+                        logging.info(f"Valor estimado em BRL da venda: {brl_received:.2f} BRL")
                         self.position = None  # Se quiser manter a posição parcial, pode remover essa linha
-                        self.balance_log = {
-                            'current_brl': self.get_balance('BRL'),
-                            'current_eth': self.get_balance('ETH')
-                        }
-                        self.send_telegram_message(f"Valores finais {self.balance_log}")
 
             elif strategy_action == 'BUY' and not self.position:
             # elif strategy_action == 'BUY':
@@ -527,47 +412,22 @@ class TradingBot:
                     raw_qty = (brl_balance * MAX_POSITION) / current_price
                     #  Verificação de saldo para evitar erro de saldo insuficiente
                     
-                    # logging.info(f"Quantidade {raw_qty} ETH que será comprada com {brl_balance} BRL")
-                    self.balance_log = {
-                        'initial_brl': self.get_balance('BRL'),
-                        'initial_eth': self.get_balance('ETH'),
-                    }
-                    self.send_telegram_message(f"Valores Iniciais {self.balance_log}")
+                    logging.info(f"Quantidade {raw_qty} SOL que será comprada com {brl_balance} BRL")
+                    
                     order = self.execute_order('BUY', raw_qty, current_price)
                     if order:
-                        preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
-                        comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
-                        # self.log_transaction('BUY', {
-                        #     'price': preco_medio,           # Preço médio real de execução
-                        #     'quantity': qtd_exec,           # Quantidade total executada
-                        #     'commission': comissoes,        # Comissões agrupadas por ativo
-                        #     'commission_brl': comissoes_brl,  # Comissões convertidas para BRL
-                        #     'reason': 'Strategy Buy Signal'
-                        # })
-                        infos = {
-                            'price': preco_medio,           # Preço médio real de execução
-                            'quantity': qtd_exec,           # Quantidade total executada
-                            'commission': comissoes,        # Comissões agrupadas por ativo
-                            'commission_brl': comissoes_brl,  # Comissões convertidas para BRL
-                            'reason': 'Strategy Buy Signal',
-                            'buy_price':preco_medio * qtd_exec
-                        }
+                        self.log_transaction('BUY', {
+                            'price': current_price,
+                            'quantity': raw_qty,
+                            'reason': 'Strategy Buy Signal'
+                        })
                         self.position = 'LONG'
                         self.entry_price = current_price
                         self.entry_qty = raw_qty
-                        self.send_telegram_message(f"📈 Compra : {infos}")
-                        self.balance_log = {
-                            'current_brl': self.get_balance('BRL'),
-                            'current_eth': self.get_balance('ETH')
-                        }
-                        self.send_telegram_message(f"Valores finais {self.balance_log}")
-            # logging.info("Ciclo completo executado com sucesso")
-            
+            logging.info("Ciclo completo executado com sucesso")
             
         except Exception as e:
-            # logging.error(f"Erro no ciclo principal: {str(e)}")
-            self.send_telegram_message(f"Erro no ciclo principal: {str(e)}")
+            logging.error(f"Erro no ciclo principal: {str(e)}")
 
 if __name__ == "__main__":
     bot = TradingBot()
@@ -575,17 +435,14 @@ if __name__ == "__main__":
     # Agendador para rodar a cada 15 minutos
     schedule.every(14).minutes.do(bot.run)
     
-    # logging.info("Iniciando robô de trading...")
-    bot.send_telegram_message(f"Iniciando robô de trading...")
+    logging.info("Iniciando robô de trading...")
     while True:
         try:
             schedule.run_pending()
             time.sleep(1)
         except KeyboardInterrupt:
-            # logging.info("Interrupção do usuário, encerrando...")
-            bot.send_telegram_message(f"Interrupção do usuário, encerrando...")
+            logging.info("Interrupção do usuário, encerrando...")
             break
         except Exception as e:
-            # logging.error(f"Erro no agendador: {str(e)}")
-            bot.send_telegram_message(f"Erro no agendador: {str(e)}")
+            logging.error(f"Erro no agendador: {str(e)}")
             time.sleep(60)
