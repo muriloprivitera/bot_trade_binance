@@ -20770,3 +20770,5 @@ Name: 499, dtype: object
 2025-03-03 14:53:05,303 - INFO - Risk Action HOLD
 2025-03-03 14:53:05,303 - INFO - Estrategia SELL
 2025-03-03 14:53:05,304 - INFO - Ciclo completo executado com sucesso
+2025-03-03 15:07:06,961 - INFO - {'initial_brl': 175.07391627, 'initial_sol': 0.000888, 'current_brl': 175.07391627, 'current_sol': 0.000888}
+2025-03-03 15:07:07,244 - INFO - Interrupção do usuário, encerrando...

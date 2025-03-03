@@ -53,10 +53,6 @@ class TradingBot:
             'current_brl': 0.0,
             'current_eth': 0.0
         }
-        
-        # Criar pastas necessárias
-        os.makedirs('logs', exist_ok=True)
-        os.makedirs('registros_saldo', exist_ok=True)
 
     def send_telegram_message(self,message):
         """Envia uma mensagem para o Telegram."""
