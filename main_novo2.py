@@ -50,7 +50,7 @@ class TradingBot:
         self.balance_log = {
             'initial_brl': 0.0,
             'initial_sol': 0.0,
-            'current_brl': 0.0,
+            'current_brl': 150,
             'current_sol': 0.0
         }
 

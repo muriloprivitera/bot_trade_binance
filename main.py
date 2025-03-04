@@ -48,9 +48,9 @@ class TradingBot:
         self.entry_price = 0.0
         self.entry_qty = 0.0
         self.balance_log = {
-            'initial_brl': 0.0,
+            'initial_brl': 150,
             'initial_eth': 0.0,
-            'current_brl': 0.0,
+            'current_brl': 150,
             'current_eth': 0.0
         }
 
@@ -372,7 +372,7 @@ class TradingBot:
         elif any(sell_conditions) and last['close'] >= self.entry_price :
             self.send_telegram_message(f"Indicadores na venda \n{last}")
             return 'SELL'
-        self.send_telegram_message(f"TESTE")
+        # self.send_telegram_message(f"TESTE")
         return 'HOLD'
 
     def ajustar_quantidade(self,quantity, step_size):
@@ -448,9 +448,9 @@ class TradingBot:
         text
         Exemplo: 1 BNB = 150 BRL.
         """
-        data = client.get_symbol_ticker(symbol=ativo)
+        data = client.get_symbol_ticker(symbol=ativo,recvWindow=60000)
         price = float(data["price"])
-        taxas = {'BNB': price}
+        taxas = {'BNB': 150}
         return taxas.get(ativo, 1)
     
     def run(self):
