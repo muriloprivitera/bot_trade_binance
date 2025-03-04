@@ -1,5 +1,5 @@
 # Excluir a pasta venv
-# venv/
+venv/
 
 # Excluir o arquivo .env
 .env

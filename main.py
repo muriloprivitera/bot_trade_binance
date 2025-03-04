@@ -327,6 +327,7 @@ class TradingBot:
         """Implementa a lógica de decisão"""
         last = df.iloc[-1]
         # logging.info(f"Indicadores: \n{last}" )
+        print(last)
         # return
         previous = df.iloc[-2]
         candle_patterns = self.identify_candle_pattern(last)
@@ -338,7 +339,7 @@ class TradingBot:
         sell_candle_condition = any(pat in candle_patterns for pat in ['Shooting Star', 'Bearish Marubozu', 'Gravestone Doji'])
         
         buy_conditions = [
-            last['close'] < last['BBU_20_2.0'], # Não comprar no topo
+            last['close'] < last['BBU_20_2'], # Não comprar no topo
             # (last['BBU_20_2.0'] - last['close']) / last['BBU_20_2.0'] > 0.003,
             last['close'] * 1.009 > last['EMA_9'], # Próximo das EMAs de suporte
             last['close'] * 1.009 > last['EMA_21'],
@@ -358,7 +359,7 @@ class TradingBot:
         ]
         
         sell_conditions = [
-            last['close'] > last['BBU_20_2.0'], #Atingiu o topo
+            last['close'] > last['BBU_20_2'], #Atingiu o topo
             last['MACDh_12_26_9'] < 0 and last['close'] < last['PSAR'], #sempre vai ser menor redundancia
             sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
             last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
