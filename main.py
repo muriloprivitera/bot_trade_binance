@@ -348,11 +348,11 @@ class TradingBot:
             last['ADX'] > 19, # Tendência forte
             last['K_14_3'] > last['D_14_3'],
             last['K_14_3'] - last['D_14_3'] >= 4,
-            last['J_14_3'] < 100,
+            # last['J_14_3'] < 100,
             # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendência de alta
             last['PSAR'] < last['close'],  # PSAR está abaixo do preço
             # Novas Condições Baseadas no Dado Anterior
-            last['close'] > previous['close'],  # Preço atual maior que o anterior
+            # last['close'] > previous['close'],  # Preço atual maior que o anterior
             last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD está subindo
             # last['ADX'] > previous['ADX'],  # ADX aumentando (tendência ganhando força)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
@@ -377,7 +377,7 @@ class TradingBot:
             # self.send_telegram_message(f"Indicadores na venda \n{last}")
             return 'SELL'
         # Monta a mensagem para as condições de compra:
-        message = f"""🔹 Condições de COMPRA:
+        message = f"""🔹 Condições de COMPRA ETHEREUM:
         1. Não comprar no topo (close < BBU): {last['close'] < last['BBU_20_2']}
         2. Próximo da EMA_9 (close*1.009 > EMA_9): {last['close'] * 1.009 > last['EMA_9']}
         3. Próximo da EMA_21 (close*1.009 > EMA_21): {last['close'] * 1.009 > last['EMA_21']}
@@ -393,7 +393,7 @@ class TradingBot:
         13. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
         14. OBV subindo (OBV > previous OBV): {last['OBV'] > previous['OBV']}
 
-        🔹 Condições de VENDA:
+        🔹 Condições de VENDA ETHEREUM:
         1. Atingiu o topo (close > BBU): {last['close'] > last['BBU_20_2']}
         2. MACDh negativo e preço abaixo do PSAR: {last['MACDh_12_26_9'] < 0 and last['close'] < last['PSAR']}
         3. Candle bearish (sell_candle_condition e ADX < 27 e close < EMA_9 e close < PSAR): {sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR']}
