@@ -84,7 +84,8 @@ class TradingBot:
         df.ta.ema(length=9, append=True)
         df.ta.ema(length=21, append=True)
         df.ta.ema(length=50, append=True)
-       
+        df['OBV'] = ta.obv(df['close'], df['volume'])  # Calcula o OBV
+        df['VMA_20'] = ta.sma(df['volume'], length=20)  # Média do volume nos últimos 20 períodos
         
         # Bollinger Bands
         df.ta.bbands(length=20, std=2, append=True)
@@ -355,6 +356,8 @@ class TradingBot:
             last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD está subindo
             # last['ADX'] > previous['ADX'],  # ADX aumentando (tendência ganhando força)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
+            last['volume'] > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
+            last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
             
         ]
         
@@ -368,12 +371,38 @@ class TradingBot:
         # logging.info(f">>>>>>> Compra {buy_conditions} com candle: {candle_patterns}" )
         # logging.info(f">>>>>>> Venda {sell_conditions} com candle: {candle_patterns}")
         if all(buy_conditions):
-            self.send_telegram_message(f"Indicadores na compra \n{last}")
+            # self.send_telegram_message(f"Indicadores na compra \n{last}")
             return 'BUY'
-        elif any(sell_conditions) and last['close'] >= self.entry_price :
-            self.send_telegram_message(f"Indicadores na venda \n{last}")
+        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] > last['VMA_20']:
+            # self.send_telegram_message(f"Indicadores na venda \n{last}")
             return 'SELL'
-        # self.send_telegram_message(f"TESTE")
+        # Monta a mensagem para as condições de compra:
+        message = f"""🔹 Condições de COMPRA:
+        1. Não comprar no topo (close < BBU): {last['close'] < last['BBU_20_2']}
+        2. Próximo da EMA_9 (close*1.009 > EMA_9): {last['close'] * 1.009 > last['EMA_9']}
+        3. Próximo da EMA_21 (close*1.009 > EMA_21): {last['close'] * 1.009 > last['EMA_21']}
+        4. Momentum positivo (MACDh > 0.6): {last['MACDh_12_26_9'] > 0.6}
+        5. Tendência forte (ADX > 19): {last['ADX'] > 19}
+        6. KDJ: K > D: {last['K_14_3'] > last['D_14_3']}
+        7. Diferença KDJ (K - D >= 4): {last['K_14_3'] - last['D_14_3'] >= 4}
+        8. J abaixo de 100: {last['J_14_3'] < 100}
+        9. PSAR abaixo do preço (PSAR < close): {last['PSAR'] < last['close']}
+        10. Preço atual maior que o anterior (close > previous close): {last['close'] > previous['close']}
+        11. MACD subindo (MACD > previous MACD): {last['MACD_12_26_9'] > previous['MACD_12_26_9']}
+        12. KDJ subindo (K > previous K): {last['K_14_3'] > previous['K_14_3']}
+        13. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
+        14. OBV subindo (OBV > previous OBV): {last['OBV'] > previous['OBV']}
+
+        🔹 Condições de VENDA:
+        1. Atingiu o topo (close > BBU): {last['close'] > last['BBU_20_2']}
+        2. MACDh negativo e preço abaixo do PSAR: {last['MACDh_12_26_9'] < 0 and last['close'] < last['PSAR']}
+        3. Candle bearish (sell_candle_condition e ADX < 27 e close < EMA_9 e close < PSAR): {sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR']}
+        4. Candle bearish (KDJ e MACD): {last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR']}
+        5. ADX forte e reversão de MACD (ADX > 27 e MACD em queda e close < PSAR): {(last['ADX'] > 27 and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'])}"""
+
+        self.send_telegram_message(message)
+
+        # self.send_telegram_message(f"Indicadores Compra >>>>>{buy_conditions}<<<<<< Indicadores venda >>>>>{sell_conditions}<<<<<")
         return 'HOLD'
 
     def ajustar_quantidade(self,quantity, step_size):

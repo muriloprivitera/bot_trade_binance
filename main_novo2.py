@@ -8,12 +8,12 @@ import schedule
 import os
 import requests
 from dotenv import load_dotenv
-import math  # Importado para cálculo correto de múltiplos
+import math  # Importado para cÃ¡lculo correto de mÃºltiplos
 
-# Configurações iniciais
+# ConfiguraÃ§Ãµes iniciais
 load_dotenv()
 
-# Configuração de logs
+# ConfiguraÃ§Ã£o de logs
 # logging.basicConfig(
 #     level=logging.INFO,
 #     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -22,23 +22,23 @@ load_dotenv()
 #         logging.StreamHandler()
 #     ]
 # )
-# Configuração do Telegram
+# ConfiguraÃ§Ã£o do Telegram
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 BINANCE_API_KEY = os.getenv('BINANCE_API_KEY')
 BINANCE_API_SECRET = os.getenv('BINANCE_API_SECRET')
 BINANCE_API_KEY_TEST = os.getenv('BINANCE_API_KEY_TEST')
 BINANCE_API_SECRET_TEST = os.getenv('BINANCE_API_SECRET_TEST')
-# Parâmetros do robô
+# ParÃ¢metros do robÃ´
 SYMBOL = 'SOLBRL'
-INTERVAL = '15m'  # Intervalo otimizado para reduzir ruído
+INTERVAL = '15m'  # Intervalo otimizado para reduzir ruÃ­do
 STOP_LOSS = 0.03  # 1.3%
 TAKE_PROFIT = 0.005  # 0,5%
-MAX_POSITION = 0.3  # 30% do saldo por operação
-MAX_POSITION_SELL = 1  # 30% do saldo por operação
+MAX_POSITION = 0.3  # 30% do saldo por operaÃ§Ã£o
+MAX_POSITION_SELL = 1  # 30% do saldo por operaÃ§Ã£o
 FEE = 0.001  # Taxa da Binance
 
-# Inicialização da API
+# InicializaÃ§Ã£o da API
 # client = Client('', '',testnet=True)
 client = Client(BINANCE_API_KEY, BINANCE_API_SECRET)
 
@@ -61,7 +61,7 @@ class TradingBot:
         response = requests.post(url, data=data)
         
     def get_historical_data(self, interval=INTERVAL, limit=500):
-        """Obtém dados históricos formatados"""
+        """ObtÃ©m dados histÃ³ricos formatados"""
         klines = client.get_klines(
             symbol=SYMBOL,
             interval=interval,
@@ -78,12 +78,14 @@ class TradingBot:
         return df
 
     def calculate_indicators(self, df):
-        """Calcula todos os indicadores técnicos usando pandas-ta"""
-        # Indicadores básicos
+        """Calcula todos os indicadores tÃ©cnicos usando pandas-ta"""
+        # Indicadores bÃ¡sicos
         df.ta.rsi(length=14, append=True)
         df.ta.ema(length=9, append=True)
         df.ta.ema(length=21, append=True)
         df.ta.ema(length=50, append=True)
+        df['OBV'] = ta.obv(df['close'], df['volume'])  # Calcula o OBV
+        df['VMA_20'] = ta.sma(df['volume'], length=20)  # Média do volume nos últimos 20 períodos
        
         
         # Bollinger Bands
@@ -105,7 +107,7 @@ class TradingBot:
          # Calcular Parabolic SAR
         psar = ta.psar(high=df['high'], low=df['low'], close=df['close'], af0=0.02, af=0.02, max_af=0.2)
         if psar is not None and not psar.empty:
-            # Criar uma única coluna consolidada para o PSAR
+            # Criar uma Ãºnica coluna consolidada para o PSAR
             df['PSAR'] = np.where(psar['PSARl_0.02_0.2'].notna(), psar['PSARl_0.02_0.2'], psar['PSARs_0.02_0.2'])
 
             # Remover linhas com NaN para evitar erros
@@ -113,23 +115,23 @@ class TradingBot:
         return df.dropna()
 
     def get_balance(self, asset):
-        """Obtém saldo formatado"""
+        """ObtÃ©m saldo formatado"""
         valor = float(client.get_asset_balance(asset,recvWindow=60000)['free'])
         return f"{valor:.10f}"
 
     # def log_transaction(self, side, detalhes):
     #     """
-    #     Implementa o log da transação.
-    #     Você pode modificar para salvar em banco de dados, enviar para um arquivo log, etc.
+    #     Implementa o log da transaÃ§Ã£o.
+    #     VocÃª pode modificar para salvar em banco de dados, enviar para um arquivo log, etc.
     #     """
-    #     logging.info(f"Transação {side}: {detalhes}")
+    #     logging.info(f"TransaÃ§Ã£o {side}: {detalhes}")
 
     def execute_order(self, side, quantity, price, order_type="LIMIT"):
         try:
-            attempt = 15  # Número máximo de tentativas
+            attempt = 15  # NÃºmero mÃ¡ximo de tentativas
             current_attempt = 0  # Contador de tentativas
 
-            # Obter informações do par
+            # Obter informaÃ§Ãµes do par
             symbol_info = client.get_symbol_info(SYMBOL)
 
             # Obter step size, minQty e minNotional
@@ -147,31 +149,31 @@ class TradingBot:
             # Calcular o valor total da ordem (em BRL)
             total_value = adjusted_qty * price
 
-            # **1️⃣ Ajustar quantidade mínima para compra (BUY)**
+            # **1ï¸â£ Ajustar quantidade mÃ­nima para compra (BUY)**
             if side == "BUY":
-                available_balance = balances.get("BRL", 0)  # Saldo disponível em BRL
-                max_qty = available_balance / price  # Quantidade máxima de SOL que pode ser comprada
-                adjusted_qty = min(adjusted_qty, max_qty)  # Garante que a quantidade não ultrapasse o saldo
+                available_balance = balances.get("BRL", 0)  # Saldo disponÃ­vel em BRL
+                max_qty = available_balance / price  # Quantidade mÃ¡xima de SOL que pode ser comprada
+                adjusted_qty = min(adjusted_qty, max_qty)  # Garante que a quantidade nÃ£o ultrapasse o saldo
                 total_cost = adjusted_qty * price  # Custo total da compra
                 if total_cost > available_balance:
-                    self.send_telegram_message(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponível apenas {available_balance:.2f} BRL")
-                    # logging.error(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponível apenas {available_balance:.2f} BRL")
+                    self.send_telegram_message(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponÃ­vel apenas {available_balance:.2f} BRL")
+                    # logging.error(f"Saldo insuficiente para compra! Tentando gastar {total_cost:.2f} BRL, mas disponÃ­vel apenas {available_balance:.2f} BRL")
                     return None  # Cancela a ordem
 
-            # **2️⃣ Ajustar quantidade mínima para venda (SELL)**
+            # **2ï¸â£ Ajustar quantidade mÃ­nima para venda (SELL)**
             elif side == "SELL":
-                available_balance = balances.get("SOL", 0)  # Saldo disponível em SOL
-                adjusted_qty = min(adjusted_qty, available_balance)  # Garante que a quantidade não ultrapasse o saldo
+                available_balance = balances.get("SOL", 0)  # Saldo disponÃ­vel em SOL
+                adjusted_qty = min(adjusted_qty, available_balance)  # Garante que a quantidade nÃ£o ultrapasse o saldo
                 if adjusted_qty > available_balance:
-                    self.send_telegram_message(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} SOL, mas disponível apenas {available_balance:.6f} SOL")
-                    # logging.error(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} SOL, mas disponível apenas {available_balance:.6f} SOL")
+                    self.send_telegram_message(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} SOL, mas disponÃ­vel apenas {available_balance:.6f} SOL")
+                    # logging.error(f"Saldo insuficiente para venda! Tentando vender {quantity:.6f} SOL, mas disponÃ­vel apenas {available_balance:.6f} SOL")
                     return None  # Cancela a ordem
 
-            # **3️⃣ Se o valor total da ordem for menor que minNotional, ajustar a quantidade corretamente**
+            # **3ï¸â£ Se o valor total da ordem for menor que minNotional, ajustar a quantidade corretamente**
             if total_value < min_notional:
-                # Calcular a quantidade necessária para atingir minNotional
+                # Calcular a quantidade necessÃ¡ria para atingir minNotional
                 min_qty_required = min_notional / price
-                # Arredondar para o próximo múltiplo válido de step_size
+                # Arredondar para o prÃ³ximo mÃºltiplo vÃ¡lido de step_size
                 adjusted_qty = math.ceil(min_qty_required / step_size) * step_size
                 # logging.warning(f"Ajustando quantidade para atender minNotional {min_notional} BRL: {adjusted_qty} SOL")
                 self.send_telegram_message(f"Ajustando quantidade para atender minNotional {min_notional} BRL: {adjusted_qty} SOL")
@@ -179,17 +181,17 @@ class TradingBot:
             # Garantir que a quantidade seja maior que minQty
             if adjusted_qty < min_qty:
                 adjusted_qty = min_qty
-                # logging.warning(f"Ajustando quantidade para o mínimo permitido {min_qty} SOL")
-                self.send_telegram_message(f"Ajustando quantidade para o mínimo permitido {min_qty} SOL")
+                # logging.warning(f"Ajustando quantidade para o mÃ­nimo permitido {min_qty} SOL")
+                self.send_telegram_message(f"Ajustando quantidade para o mÃ­nimo permitido {min_qty} SOL")
 
-            # Verificação final: garantir que o valor total da ordem atenda `minNotional`
+            # VerificaÃ§Ã£o final: garantir que o valor total da ordem atenda `minNotional`
             if adjusted_qty * price < min_notional:
-                # logging.error(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda está abaixo de {min_notional} BRL")
-                self.send_telegram_message(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda está abaixo de {min_notional} BRL")
+                # logging.error(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda estÃ¡ abaixo de {min_notional} BRL")
+                self.send_telegram_message(f"Erro: Valor total da ordem ({adjusted_qty * price} BRL) ainda estÃ¡ abaixo de {min_notional} BRL")
                 return None
 
             while current_attempt < attempt:
-                # Criar ordem de mercado ou limitada conforme configuração
+                # Criar ordem de mercado ou limitada conforme configuraÃ§Ã£o
                 if order_type == "MARKET":
                     order = client.create_order(
                         symbol=SYMBOL,
@@ -220,18 +222,18 @@ class TradingBot:
                     self.send_telegram_message(f"Ordem {side} executada com sucesso: {executed_qty} {SYMBOL}")
                     return order
                 else:
-                    # logging.warning(f"Ordem {side} não executada, tentando novamente...")
-                    # self.send_telegram_message(f"Ordem {side} não executada, tentando novamente...")
+                    # logging.warning(f"Ordem {side} nÃ£o executada, tentando novamente...")
+                    # self.send_telegram_message(f"Ordem {side} nÃ£o executada, tentando novamente...")
 
-                    # Se a ordem não foi executada, cancelar antes de tentar de novo
-                    # logging.info(f"Cancelando ordem não executada: {order['orderId']}")
-                    self.send_telegram_message(f"Cancelando ordem não executada: {order['orderId']}")
+                    # Se a ordem nÃ£o foi executada, cancelar antes de tentar de novo
+                    # logging.info(f"Cancelando ordem nÃ£o executada: {order['orderId']}")
+                    self.send_telegram_message(f"Cancelando ordem nÃ£o executada: {order['orderId']}")
                     client.cancel_order(symbol=SYMBOL, orderId=order['orderId'],recvWindow=60000)
 
                     current_attempt += 1
             # client.cancel_order(symbol=SYMBOL, orderId=order['orderId'],recvWindow=60000)
-            # logging.error(f"Ordem {side} falhou após {attempt} tentativas")
-            self.send_telegram_message(f"Ordem {side} falhou após {attempt} tentativas")
+            # logging.error(f"Ordem {side} falhou apÃ³s {attempt} tentativas")
+            self.send_telegram_message(f"Ordem {side} falhou apÃ³s {attempt} tentativas")
             return None
 
         except Exception as e:
@@ -241,18 +243,18 @@ class TradingBot:
 
     def identify_candle_pattern(self,candle):
         """
-        Recebe um dicionário 'candle' com as chaves: 'open', 'high', 'low', 'close'
-        e retorna uma lista com os padrões candlestick identificados.
+        Recebe um dicionÃ¡rio 'candle' com as chaves: 'open', 'high', 'low', 'close'
+        e retorna uma lista com os padrÃµes candlestick identificados.
         
-        Padrões identificados:
+        PadrÃµes identificados:
         - Bullish Marubozu: candle de alta com pouca sombra, onde open ~ low e close ~ high.
         - Bearish Marubozu: candle de baixa com pouca sombra, onde open ~ high e close ~ low.
         - Hammer: candle bullish com corpo pequeno e sombra inferior longa (pelo menos 2x o corpo), pouca ou nenhuma sombra superior.
         - Shooting Star: candle bearish com corpo pequeno e sombra superior longa (pelo menos 2x o corpo), pouca ou nenhuma sombra inferior.
-        - Dragonfly Doji: candle em que open, close e high são quase iguais, com uma longa sombra inferior.
-        - Gravestone Doji: candle em que open, close e low são quase iguais, com uma longa sombra superior.
+        - Dragonfly Doji: candle em que open, close e high sÃ£o quase iguais, com uma longa sombra inferior.
+        - Gravestone Doji: candle em que open, close e low sÃ£o quase iguais, com uma longa sombra superior.
 
-        Os parâmetros de tolerância podem ser ajustados conforme a volatilidade do ativo.
+        Os parÃ¢metros de tolerÃ¢ncia podem ser ajustados conforme a volatilidade do ativo.
         """
         o = candle['open']
         h = candle['high']
@@ -272,7 +274,7 @@ class TradingBot:
         upper_shadow = h - max(o, c)
         lower_shadow = min(o, c) - l
 
-        # Define uma tolerância baseada na amplitude do candle; ajuste conforme necessário
+        # Define uma tolerÃ¢ncia baseada na amplitude do candle; ajuste conforme necessÃ¡rio
         tol = 0.001 * (h - l)  # 0,1% da amplitude total
 
         patterns = []
@@ -293,11 +295,11 @@ class TradingBot:
         if candle_color == "red" and upper_shadow > 2 * body and lower_shadow < body:
             patterns.append("Shooting Star")
 
-        # Dragonfly Doji: candle com open, close e high muito próximos e sombra inferior longa
+        # Dragonfly Doji: candle com open, close e high muito prÃ³ximos e sombra inferior longa
         if candle_color == "doji" and abs(o - h) < tol and lower_shadow > 2 * body:
             patterns.append("Dragonfly Doji")
 
-        # Gravestone Doji: candle com open, close e low muito próximos e sombra superior longa
+        # Gravestone Doji: candle com open, close e low muito prÃ³ximos e sombra superior longa
         if candle_color == "doji" and abs(o - l) < tol and upper_shadow > 2 * body:
             patterns.append("Gravestone Doji")
 
@@ -317,62 +319,84 @@ class TradingBot:
                 return 'SELL'
                 
             if pl_percent >= TAKE_PROFIT:
-                # logging.info(f"Take profit alcançado! Ganho: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Take profit alcançado! 🎯 Ganho: {pl_percent*100:.2f}%")
+                # logging.info(f"Take profit alcanÃ§ado! Ganho: {pl_percent*100:.2f}%")
+                self.send_telegram_message(f"Take profit alcanÃ§ado! ð¯ Ganho: {pl_percent*100:.2f}%")
                 return 'SELL'
         
         return 'HOLD'
 
     def trading_strategy(self, df):
-        """Implementa a lógica de decisão"""
+        """Implementa a lÃ³gica de decisÃ£o"""
         last = df.iloc[-1]
         # logging.info(f"Indicadores: \n{last}" )
         # return
         previous = df.iloc[-2]
         candle_patterns = self.identify_candle_pattern(last)
 
-        # Para compra, você pode querer padrões bullish como Hammer ou Bullish Marubozu:
+        # Para compra, vocÃª pode querer padrÃµes bullish como Hammer ou Bullish Marubozu:
         buy_candle_condition = any(pat in candle_patterns for pat in ['Hammer', 'Bullish Marubozu', 'Dragonfly Doji','Inverted Hammer'])
 
-        # Para venda, você pode querer padrões bearish como Shooting Star ou Bearish Marubozu:
+        # Para venda, vocÃª pode querer padrÃµes bearish como Shooting Star ou Bearish Marubozu:
         sell_candle_condition = any(pat in candle_patterns for pat in ['Shooting Star', 'Bearish Marubozu', 'Gravestone Doji'])
         
         buy_conditions = [
-            last['close'] < last['BBU_20_2.0'], # Não comprar no topo
+            last['close'] < last['BBU_20_2.0'], # NÃ£o comprar no topo
             # (last['BBU_20_2.0'] - last['close']) / last['BBU_20_2.0'] > 0.003,
-            last['close'] * 1.009 > last['EMA_9'], # Próximo das EMAs de suporte
+            last['close'] * 1.009 > last['EMA_9'], # PrÃ³ximo das EMAs de suporte
             last['close'] * 1.009 > last['EMA_21'],
-            last['MACDh_12_26_9'] > 0.6, # Confirmação do momentum positivo
-            last['ADX'] > 19, # Tendência forte
+            last['MACDh_12_26_9'] > 0.6, # ConfirmaÃ§Ã£o do momentum positivo
+            last['ADX'] > 19, # TendÃªncia forte
             last['K_14_3'] > last['D_14_3'],
             last['K_14_3'] - last['D_14_3'] >= 4,
             last['J_14_3'] < 100,
-            # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendência de alta
-            last['PSAR'] < last['close'],  # PSAR está abaixo do preço
-            # Novas Condições Baseadas no Dado Anterior
-            last['close'] > previous['close'],  # Preço atual maior que o anterior
-            last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD está subindo
-            # last['ADX'] > previous['ADX'],  # ADX aumentando (tendência ganhando força)
+            # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendÃªncia de alta
+            last['PSAR'] < last['close'],  # PSAR estÃ¡ abaixo do preÃ§o
+            # Novas CondiÃ§Ãµes Baseadas no Dado Anterior
+            last['close'] > previous['close'],  # PreÃ§o atual maior que o anterior
+            last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD estÃ¡ subindo
+            # last['ADX'] > previous['ADX'],  # ADX aumentando (tendÃªncia ganhando forÃ§a)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
+            last['volume'] > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
+            last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
             
         ]
         
         sell_conditions = [
             last['close'] > last['BBU_20_2.0'], #Atingiu o topo
             last['MACDh_12_26_9'] < 0 and last['close'] < last['PSAR'], #sempre vai ser menor redundancia
-            sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
-            last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
+            sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR'],                  # PadrÃ£o de candle bearish identificado
+            last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'],                  # PadrÃ£o de candle bearish identificado
             (last['ADX'] > 27 and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'])
         ]
-        # logging.info(f">>>>>>> Compra {buy_conditions} com candle: {candle_patterns}" )
-        # logging.info(f">>>>>>> Venda {sell_conditions} com candle: {candle_patterns}")
         if all(buy_conditions):
-            self.send_telegram_message(f"Indicadores na compra \n{last}")
             return 'BUY'
-        elif any(sell_conditions) and last['close'] >= self.entry_price :
-            self.send_telegram_message(f"Indicadores na venda \n{last}")
+        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] > last['VMA_20'] :
             return 'SELL'
-        self.send_telegram_message(f"TESTE")
+        message = f"""🔹 Condições de COMPRA:
+        1. Não comprar no topo (close < BBU): {last['close'] < last['BBU_20_2']}
+        2. Próximo da EMA_9 (close*1.009 > EMA_9): {last['close'] * 1.009 > last['EMA_9']}
+        3. Próximo da EMA_21 (close*1.009 > EMA_21): {last['close'] * 1.009 > last['EMA_21']}
+        4. Momentum positivo (MACDh > 0.6): {last['MACDh_12_26_9'] > 0.6}
+        5. Tendência forte (ADX > 19): {last['ADX'] > 19}
+        6. KDJ: K > D: {last['K_14_3'] > last['D_14_3']}
+        7. Diferença KDJ (K - D >= 4): {last['K_14_3'] - last['D_14_3'] >= 4}
+        8. J abaixo de 100: {last['J_14_3'] < 100}
+        9. PSAR abaixo do preço (PSAR < close): {last['PSAR'] < last['close']}
+        10. Preço atual maior que o anterior (close > previous close): {last['close'] > previous['close']}
+        11. MACD subindo (MACD > previous MACD): {last['MACD_12_26_9'] > previous['MACD_12_26_9']}
+        12. KDJ subindo (K > previous K): {last['K_14_3'] > previous['K_14_3']}
+        13. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
+        14. OBV subindo (OBV > previous OBV): {last['OBV'] > previous['OBV']}
+
+        🔹 Condições de VENDA:
+        1. Atingiu o topo (close > BBU): {last['close'] > last['BBU_20_2']}
+        2. MACDh negativo e preço abaixo do PSAR: {last['MACDh_12_26_9'] < 0 and last['close'] < last['PSAR']}
+        3. Candle bearish (sell_candle_condition e ADX < 27 e close < EMA_9 e close < PSAR): {sell_candle_condition and last['ADX'] < 27 and last['close'] < last['EMA_9'] and last['close'] < last['PSAR']}
+        4. Candle bearish (KDJ e MACD): {last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR']}
+        5. ADX forte e reversão de MACD (ADX > 27 e MACD em queda e close < PSAR): {(last['ADX'] > 27 and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'])}"""
+
+        self.send_telegram_message(message)
+
         return 'HOLD'
 
     def ajustar_quantidade(self,quantity, step_size):
@@ -383,9 +407,9 @@ class TradingBot:
         """
         Processa os detalhes dos fills de uma ordem.
         Retorna:
-        - preco_medio: média ponderada dos preços de execução
+        - preco_medio: mÃ©dia ponderada dos preÃ§os de execuÃ§Ã£o
         - quantidade_total: soma das quantidades executadas
-        - comissoes: dicionário com a soma das comissões por ativo
+        - comissoes: dicionÃ¡rio com a soma das comissÃµes por ativo
         """
         fills = order.get('fills', [])
         if not fills:
@@ -406,11 +430,11 @@ class TradingBot:
                 print(f"Erro ao converter valores do fill: {e}")
                 continue
 
-            # Acumula quantidade e soma ponderada do preço
+            # Acumula quantidade e soma ponderada do preÃ§o
             quantidade_total += qty
             soma_ponderada += preco * qty
 
-            # Agrupa comissões por ativo
+            # Agrupa comissÃµes por ativo
             if ativo_comissao in comissoes:
                 comissoes[ativo_comissao] += comissao
             else:
@@ -421,29 +445,29 @@ class TradingBot:
     
     def converter_comissao_para_brl(self,comissoes, taxa_conversao):
         """
-        Converte as comissões para BRL utilizando um dicionário com as taxas de conversão.
+        Converte as comissÃµes para BRL utilizando um dicionÃ¡rio com as taxas de conversÃ£o.
 
         text
-        Parâmetros:
-        comissoes: dicionário no formato {'BNB': valor, ...}
-        taxa_conversao: dicionário com taxa de conversão, ex: {'BNB': 150.0}
+        ParÃ¢metros:
+        comissoes: dicionÃ¡rio no formato {'BNB': valor, ...}
+        taxa_conversao: dicionÃ¡rio com taxa de conversÃ£o, ex: {'BNB': 150.0}
 
         Retorna:
-        comissoes_brl: dicionário com as comissões convertidas para BRL.
+        comissoes_brl: dicionÃ¡rio com as comissÃµes convertidas para BRL.
         """
         comissoes_brl = {}
         for ativo, valor in comissoes.items():
             if ativo in taxa_conversao:
                 comissoes_brl[ativo] = valor * taxa_conversao[ativo]
             else:
-                # Se não houver taxa definida, você pode optar por manter o valor original ou definir como None
+                # Se nÃ£o houver taxa definida, vocÃª pode optar por manter o valor original ou definir como None
                 comissoes_brl[ativo] = valor  
         return comissoes_brl
     
     def obter_taxa_brl_para(self,ativo):
         """
-        Função fictícia para obter a taxa de conversão do ativo para BRL.
-        Substitua essa função pela implementação que recupere a taxa real.
+        FunÃ§Ã£o fictÃ­cia para obter a taxa de conversÃ£o do ativo para BRL.
+        Substitua essa funÃ§Ã£o pela implementaÃ§Ã£o que recupere a taxa real.
 
         text
         Exemplo: 1 BNB = 150 BRL.
@@ -465,7 +489,7 @@ class TradingBot:
             current_price = df.iloc[-1]['close']
             risk_action = self.check_risk_management(current_price)
             
-            # Tomar decisão estratégica
+            # Tomar decisÃ£o estratÃ©gica
             strategy_action = self.trading_strategy(df)
             # logging.info("Risk Action "+ risk_action)
             # logging.info("Estrategia "+ strategy_action)
@@ -486,30 +510,30 @@ class TradingBot:
                     if order:
                         # Processa os detalhes dos fills da ordem
                         preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
-                        # Obtem taxa de conversão para cada ativo nas comissões,
+                        # Obtem taxa de conversÃ£o para cada ativo nas comissÃµes,
                         # por enquanto, usando apenas BNB como exemplo.
                         taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
-                        # Log da transação com os dados processados
+                        # Log da transaÃ§Ã£o com os dados processados
                         # self.log_transaction('SELL', {
-                        #     'price': preco_medio,          # Preço médio de execução
+                        #     'price': preco_medio,          # PreÃ§o mÃ©dio de execuÃ§Ã£o
                         #     'quantity': qtd_exec,          # Quantidade total executada
-                        #     'commission': comissoes,       # Comissões por ativo
-                        #     'commission_brl': comissoes_brl, # Comissões convertidas para BRL
+                        #     'commission': comissoes,       # ComissÃµes por ativo
+                        #     'commission_brl': comissoes_brl, # ComissÃµes convertidas para BRL
                         #     'sell_price' : preco_medio * qtd_exec
                         #     'reason': 'Risk/Strategy Sell Signal'
                         # })
                         infos = {
-                            'price': preco_medio,          # Preço médio de execução
+                            'price': preco_medio,          # PreÃ§o mÃ©dio de execuÃ§Ã£o
                             'quantity': qtd_exec,          # Quantidade total executada
-                            'commission': comissoes,       # Comissões por ativo
-                            'commission_brl': comissoes_brl, # Comissões convertidas para BRL
+                            'commission': comissoes,       # ComissÃµes por ativo
+                            'commission_brl': comissoes_brl, # ComissÃµes convertidas para BRL
                             'sell_price' : preco_medio * qtd_exec,
                             'reason': 'Risk/Strategy Sell Signal'
                         }
-                        self.send_telegram_message(f"📉 Venda : {infos}")
+                        self.send_telegram_message(f"ð Venda : {infos}")
                         # logging.info(f"Valor estimado em BRL da venda: {brl_received:.2f} BRL")
-                        self.position = None  # Se quiser manter a posição parcial, pode remover essa linha
+                        self.position = None  # Se quiser manter a posiÃ§Ã£o parcial, pode remover essa linha
                         self.balance_log = {
                             'current_brl': self.get_balance('BRL'),
                             'current_sol': self.get_balance('SOL')
@@ -521,9 +545,9 @@ class TradingBot:
                 brl_balance = self.balance_log['current_brl']
                 if brl_balance > 10:
                     raw_qty = (brl_balance * MAX_POSITION) / current_price
-                    #  Verificação de saldo para evitar erro de saldo insuficiente
+                    #  VerificaÃ§Ã£o de saldo para evitar erro de saldo insuficiente
                     
-                    # logging.info(f"Quantidade {raw_qty} SOL que será comprada com {brl_balance} BRL")
+                    # logging.info(f"Quantidade {raw_qty} SOL que serÃ¡ comprada com {brl_balance} BRL")
                     self.balance_log = {
                         'initial_brl': self.get_balance('BRL'),
                         'initial_sol': self.get_balance('SOL'),
@@ -535,24 +559,24 @@ class TradingBot:
                         taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
                         # self.log_transaction('BUY', {
-                        #     'price': preco_medio,           # Preço médio real de execução
+                        #     'price': preco_medio,           # PreÃ§o mÃ©dio real de execuÃ§Ã£o
                         #     'quantity': qtd_exec,           # Quantidade total executada
-                        #     'commission': comissoes,        # Comissões agrupadas por ativo
-                        #     'commission_brl': comissoes_brl,  # Comissões convertidas para BRL
+                        #     'commission': comissoes,        # ComissÃµes agrupadas por ativo
+                        #     'commission_brl': comissoes_brl,  # ComissÃµes convertidas para BRL
                         #     'reason': 'Strategy Buy Signal'
                         # })
                         infos = {
-                            'price': preco_medio,           # Preço médio real de execução
+                            'price': preco_medio,           # PreÃ§o mÃ©dio real de execuÃ§Ã£o
                             'quantity': qtd_exec,           # Quantidade total executada
-                            'commission': comissoes,        # Comissões agrupadas por ativo
-                            'commission_brl': comissoes_brl,  # Comissões convertidas para BRL
+                            'commission': comissoes,        # ComissÃµes agrupadas por ativo
+                            'commission_brl': comissoes_brl,  # ComissÃµes convertidas para BRL
                             'reason': 'Strategy Buy Signal',
                             'buy_price':preco_medio * qtd_exec
                         }
                         self.position = 'LONG'
                         self.entry_price = current_price
                         self.entry_qty = raw_qty
-                        self.send_telegram_message(f"📈 Compra : {infos}")
+                        self.send_telegram_message(f"ð Compra : {infos}")
                         self.balance_log = {
                             'current_brl': self.get_balance('BRL'),
                             'current_sol': self.get_balance('SOL')
@@ -571,15 +595,15 @@ if __name__ == "__main__":
     # Agendador para rodar a cada 15 minutos
     schedule.every(14).minutes.do(bot.run)
     
-    # logging.info("Iniciando robô de trading...")
-    bot.send_telegram_message(f"Iniciando robô de trading...")
+    # logging.info("Iniciando robÃ´ de trading...")
+    bot.send_telegram_message(f"Iniciando robÃ´ de trading...")
     while True:
         try:
             schedule.run_pending()
             time.sleep(1)
         except KeyboardInterrupt:
-            # logging.info("Interrupção do usuário, encerrando...")
-            bot.send_telegram_message(f"Interrupção do usuário, encerrando...")
+            # logging.info("InterrupÃ§Ã£o do usuÃ¡rio, encerrando...")
+            bot.send_telegram_message(f"InterrupÃ§Ã£o do usuÃ¡rio, encerrando...")
             break
         except Exception as e:
             # logging.error(f"Erro no agendador: {str(e)}")
