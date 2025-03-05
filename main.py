@@ -307,21 +307,23 @@ class TradingBot:
 
         return patterns
 
-    def check_risk_management(self, current_price):
+    def check_risk_management(self, df):
         """Verifica stop loss e take profit"""
+        last = df.iloc[-1]
+        current_price = last['close']
+        atr = last['ATRr_14']
+        calculo_stop_loss = self.entry_price - (atr * 3)
+        calculo_take_profit = self.entry_price + (atr * 1.6)
         if self.position == 'LONG':
-            pl_percent = (current_price - self.entry_price) / self.entry_price
             
-            if pl_percent <= -STOP_LOSS:
-                # logging.warning(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
+            if current_price <= calculo_stop_loss:
+                self.send_telegram_message(f"Stop-Loss acionado! Preço atual: {current_price:.2f} <= Stop-Loss: {calculo_stop_loss:.2f}. Vender!")
                 return 'SELL'
                 
-            if pl_percent >= TAKE_PROFIT:
-                # logging.info(f"Take profit alcançado! Ganho: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Take profit alcançado! 🎯 Ganho: {pl_percent*100:.2f}%")
+            if current_price >= calculo_take_profit:
+                self.send_telegram_message(f"Take Profit acionado! Preço atual: {current_price:.2f} >= Take Profit: {calculo_take_profit:.2f}. Vender!")
                 return 'SELL'
-        
+            self.send_telegram_message(f"Preço atual: {current_price:.2f} não atingiu Stop-Loss nem Take Profit. Manter posição.")
         return 'HOLD'
 
     def trading_strategy(self, df):
@@ -341,23 +343,18 @@ class TradingBot:
         
         buy_conditions = [
             last['close'] < last['BBU_20_2'], # Não comprar no topo
-            # (last['BBU_20_2.0'] - last['close']) / last['BBU_20_2.0'] > 0.003,
             last['close'] * 1.009 > last['EMA_9'], # Próximo das EMAs de suporte
             last['close'] * 1.009 > last['EMA_21'],
-            last['MACDh_12_26_9'] > 0.6, # Confirmação do momentum positivo
-            last['ADX'] > 19, # Tendência forte
+            # last['MACDh_12_26_9'] > 0.6, # Confirmação do momentum positivo
+            last['ADX'] > 18, # Tendência forte
             last['K_14_3'] > last['D_14_3'],
             last['K_14_3'] - last['D_14_3'] >= 4,
-            # last['J_14_3'] < 100,
-            # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendência de alta
             last['PSAR'] < last['close'],  # PSAR está abaixo do preço
             # Novas Condições Baseadas no Dado Anterior
-            # last['close'] > previous['close'],  # Preço atual maior que o anterior
             last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD está subindo
-            # last['ADX'] > previous['ADX'],  # ADX aumentando (tendência ganhando força)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
-            last['volume'] > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
-            last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
+            last['volume'] * 1.009 > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
+            # last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
             
         ]
         
@@ -368,30 +365,24 @@ class TradingBot:
             last['K_14_3'] < last['D_14_3'] and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'],                  # Padrão de candle bearish identificado
             (last['ADX'] > 27 and last['MACD_12_26_9'] < last['MACDs_12_26_9'] and last['close'] < last['PSAR'])
         ]
-        # logging.info(f">>>>>>> Compra {buy_conditions} com candle: {candle_patterns}" )
-        # logging.info(f">>>>>>> Venda {sell_conditions} com candle: {candle_patterns}")
         if all(buy_conditions):
             # self.send_telegram_message(f"Indicadores na compra \n{last}")
             return 'BUY'
-        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] > last['VMA_20']:
+        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] * 1.009 > last['VMA_20']:
             # self.send_telegram_message(f"Indicadores na venda \n{last}")
             return 'SELL'
         # Monta a mensagem para as condições de compra:
-        message = f"""🔹 Condições de COMPRA ETHEREUM:
+        message = f"""🔹 Condições de COMPRA ETHEREUM {last['close']}:
         1. Não comprar no topo (close < BBU): {last['close'] < last['BBU_20_2']}
         2. Próximo da EMA_9 (close*1.009 > EMA_9): {last['close'] * 1.009 > last['EMA_9']}
         3. Próximo da EMA_21 (close*1.009 > EMA_21): {last['close'] * 1.009 > last['EMA_21']}
-        4. Momentum positivo (MACDh > 0.6): {last['MACDh_12_26_9'] > 0.6}
-        5. Tendência forte (ADX > 19): {last['ADX'] > 19}
+        5. Tendência forte (ADX > 18): {last['ADX'] > 19}
         6. KDJ: K > D: {last['K_14_3'] > last['D_14_3']}
         7. Diferença KDJ (K - D >= 4): {last['K_14_3'] - last['D_14_3'] >= 4}
-        8. J abaixo de 100: {last['J_14_3'] < 100}
         9. PSAR abaixo do preço (PSAR < close): {last['PSAR'] < last['close']}
-        10. Preço atual maior que o anterior (close > previous close): {last['close'] > previous['close']}
         11. MACD subindo (MACD > previous MACD): {last['MACD_12_26_9'] > previous['MACD_12_26_9']}
         12. KDJ subindo (K > previous K): {last['K_14_3'] > previous['K_14_3']}
         13. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
-        14. OBV subindo (OBV > previous OBV): {last['OBV'] > previous['OBV']}
 
         🔹 Condições de VENDA ETHEREUM:
         1. Atingiu o topo (close > BBU): {last['close'] > last['BBU_20_2']}
@@ -493,7 +484,7 @@ class TradingBot:
             
             # Verificar gerenciamento de risco
             current_price = df.iloc[-1]['close']
-            risk_action = self.check_risk_management(current_price)
+            risk_action = self.check_risk_management(df)
             
             # Tomar decisão estratégica
             strategy_action = self.trading_strategy(df)
@@ -518,7 +509,7 @@ class TradingBot:
                         preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
                         # Obtem taxa de conversão para cada ativo nas comissões,
                         # por enquanto, usando apenas BNB como exemplo.
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
+                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNBBRL')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
                         # Log da transação com os dados processados
                         # self.log_transaction('SELL', {
@@ -562,7 +553,7 @@ class TradingBot:
                     order = self.execute_order('BUY', raw_qty, current_price)
                     if order:
                         preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
+                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNBBRL')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
                         # self.log_transaction('BUY', {
                         #     'price': preco_medio,           # Preço médio real de execução
@@ -580,7 +571,7 @@ class TradingBot:
                             'buy_price':preco_medio * qtd_exec
                         }
                         self.position = 'LONG'
-                        self.entry_price = current_price
+                        self.entry_price = preco_medio
                         self.entry_qty = raw_qty
                         self.send_telegram_message(f"📈 Compra : {infos}")
                         self.balance_log = {

@@ -308,21 +308,25 @@ class TradingBot:
 
         return patterns
 
-    def check_risk_management(self, current_price):
+    def check_risk_management(self, df):
         """Verifica stop loss e take profit"""
+        last = df.iloc[-1]
+        current_price = last['close']
+        atr = last['ATRr_14']
+        calculo_stop_loss = self.entry_price - (atr * 3)
+        calculo_take_profit = self.entry_price + (atr * 1.6)
         if self.position == 'LONG':
-            pl_percent = (current_price - self.entry_price) / self.entry_price
             
-            if pl_percent <= -STOP_LOSS:
+            if current_price <= calculo_stop_loss:
                 # logging.warning(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Stop loss acionado! Perda: {pl_percent*100:.2f}%")
+                self.send_telegram_message(f"Stop-Loss acionado! Preço atual: {current_price:.2f} <= Stop-Loss: {calculo_stop_loss:.2f}. Vender!")
                 return 'SELL'
                 
-            if pl_percent >= TAKE_PROFIT:
+            if current_price >= calculo_take_profit:
                 # logging.info(f"Take profit alcanÃ§ado! Ganho: {pl_percent*100:.2f}%")
-                self.send_telegram_message(f"Take profit alcanÃ§ado! ð¯ Ganho: {pl_percent*100:.2f}%")
+                self.send_telegram_message(f"Take Profit acionado! Preço atual: {current_price:.2f} >= Take Profit: {calculo_take_profit:.2f}. Vender!")
                 return 'SELL'
-        
+            self.send_telegram_message(f"Preço atual: {current_price:.2f} não atingiu Stop-Loss nem Take Profit. Manter posição.")
         return 'HOLD'
 
     def trading_strategy(self, df):
@@ -340,25 +344,19 @@ class TradingBot:
         sell_candle_condition = any(pat in candle_patterns for pat in ['Shooting Star', 'Bearish Marubozu', 'Gravestone Doji'])
         
         buy_conditions = [
-            last['close'] < last['BBU_20_2.0'], # NÃ£o comprar no topo
-            # (last['BBU_20_2.0'] - last['close']) / last['BBU_20_2.0'] > 0.003,
-            last['close'] * 1.009 > last['EMA_9'], # PrÃ³ximo das EMAs de suporte
+            last['close'] < last['BBU_20_2.0'], # Não comprar no topo
+            last['close'] * 1.009 > last['EMA_9'], # Proximo das EMAs de suporte
             last['close'] * 1.009 > last['EMA_21'],
-            last['MACDh_12_26_9'] > 0.6, # ConfirmaÃ§Ã£o do momentum positivo
-            last['ADX'] > 19, # TendÃªncia forte
+            # last['MACDh_12_26_9'] > 0.3, # ConfirmaÃ§Ã£o do momentum positivo
+            last['ADX'] > 14, # TENDENCIA forte
             last['K_14_3'] > last['D_14_3'],
             last['K_14_3'] - last['D_14_3'] >= 4,
-            # last['J_14_3'] < 100,
-            # last['PSARl_0.02_0.2'] > 0,  # Verifica se existe um valor PSAR para tendÃªncia de alta
             last['PSAR'] < last['close'],  # PSAR estÃ¡ abaixo do preÃ§o
-            # Novas CondiÃ§Ãµes Baseadas no Dado Anterior
-            # last['close'] > previous['close'],  # PreÃ§o atual maior que o anterior
+            # Novas Condiçoes Baseadas no Dado Anterior
             last['MACD_12_26_9'] > previous['MACD_12_26_9'],  # MACD estÃ¡ subindo
-            # last['ADX'] > previous['ADX'],  # ADX aumentando (tendÃªncia ganhando forÃ§a)
             last['K_14_3'] > previous['K_14_3'],  # KDJ subindo
-            last['volume'] > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
-            last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
-            
+            last['volume'] * 1.009 > last['VMA_20'],  # Volume acima da média dos últimos 20 períodos
+            # last['OBV'] > previous['OBV'], # OBV está subindo (confirma entrada de dinheiro)
         ]
         
         sell_conditions = [
@@ -370,23 +368,19 @@ class TradingBot:
         ]
         if all(buy_conditions):
             return 'BUY'
-        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] > last['VMA_20'] :
+        elif any(sell_conditions) and last['close'] >= self.entry_price and last['volume'] * 1.009 > last['VMA_20'] :
             return 'SELL'
-        message = f"""🔹 Condições de COMPRA SOLANA:
+        message = f"""🔹 Condições de COMPRA SOLANA Valor {last['close']}:
         1. Não comprar no topo (close < BBU): {last['close'] < last['BBU_20_2']}
         2. Próximo da EMA_9 (close*1.009 > EMA_9): {last['close'] * 1.009 > last['EMA_9']}
         3. Próximo da EMA_21 (close*1.009 > EMA_21): {last['close'] * 1.009 > last['EMA_21']}
-        4. Momentum positivo (MACDh > 0.6): {last['MACDh_12_26_9'] > 0.6}
-        5. Tendência forte (ADX > 19): {last['ADX'] > 19}
+        5. Tendência forte (ADX > 14): {last['ADX'] > 19}
         6. KDJ: K > D: {last['K_14_3'] > last['D_14_3']}
         7. Diferença KDJ (K - D >= 4): {last['K_14_3'] - last['D_14_3'] >= 4}
-        8. J abaixo de 100: {last['J_14_3'] < 100}
-        9. PSAR abaixo do preço (PSAR < close): {last['PSAR'] < last['close']}
-        10. Preço atual maior que o anterior (close > previous close): {last['close'] > previous['close']}
-        11. MACD subindo (MACD > previous MACD): {last['MACD_12_26_9'] > previous['MACD_12_26_9']}
-        12. KDJ subindo (K > previous K): {last['K_14_3'] > previous['K_14_3']}
-        13. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
-        14. OBV subindo (OBV > previous OBV): {last['OBV'] > previous['OBV']}
+        8. PSAR abaixo do preço (PSAR < close): {last['PSAR'] < last['close']}
+        9. MACD subindo (MACD > previous MACD): {last['MACD_12_26_9'] > previous['MACD_12_26_9']}
+        10. KDJ subindo (K > previous K): {last['K_14_3'] > previous['K_14_3']}
+        11. Volume acima da média (volume > VMA_20): {last['volume'] > last['VMA_20']}
 
         🔹 Condições de VENDA SOLANA:
         1. Atingiu o topo (close > BBU): {last['close'] > last['BBU_20_2']}
@@ -487,7 +481,7 @@ class TradingBot:
             
             # Verificar gerenciamento de risco
             current_price = df.iloc[-1]['close']
-            risk_action = self.check_risk_management(current_price)
+            risk_action = self.check_risk_management(df)
             
             # Tomar decisÃ£o estratÃ©gica
             strategy_action = self.trading_strategy(df)
@@ -512,7 +506,7 @@ class TradingBot:
                         preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
                         # Obtem taxa de conversÃ£o para cada ativo nas comissÃµes,
                         # por enquanto, usando apenas BNB como exemplo.
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
+                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNBBRL')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
                         # Log da transaÃ§Ã£o com os dados processados
                         # self.log_transaction('SELL', {
@@ -556,7 +550,7 @@ class TradingBot:
                     order = self.execute_order('BUY', raw_qty, current_price)
                     if order:
                         preco_medio, qtd_exec, comissoes = self.processar_detalhes_ordem(order)
-                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNB')}
+                        taxa_conversao = {'BNB': self.obter_taxa_brl_para('BNBBRL')}
                         comissoes_brl = self.converter_comissao_para_brl(comissoes, taxa_conversao)
                         # self.log_transaction('BUY', {
                         #     'price': preco_medio,           # PreÃ§o mÃ©dio real de execuÃ§Ã£o
@@ -574,7 +568,7 @@ class TradingBot:
                             'buy_price':preco_medio * qtd_exec
                         }
                         self.position = 'LONG'
-                        self.entry_price = current_price
+                        self.entry_price = preco_medio
                         self.entry_qty = raw_qty
                         self.send_telegram_message(f"ð Compra : {infos}")
                         self.balance_log = {
